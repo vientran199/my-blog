@@ -20,7 +20,7 @@
   "_comment2": "Đây là comment: khi thực hiện git commit, câu lệnh này sẽ chạy",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run beautiful"
     }
   },
   "bugs": {
