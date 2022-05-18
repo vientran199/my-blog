@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/vientran199/my-blog#readme",
   "devDependencies": {
-    "husky": "^8.0.1",
+    "husky": "^4.2.5",
     "lint-staged": "^12.4.1",
     "prettier": "^2.6.2"
   }
