@@ -1,0 +1,34 @@
+{
+  "name": "my-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vientran199/my-blog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "_comment1": "Đây là comment: khi thực hiện git add, thì câu lệnh này sẽ chạy",
+  "lint-staged": {
+    "server/src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
+  },
+  "_comment2": "Đây là comment: khi thực hiện git commit, câu lệnh này sẽ chạy",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/vientran199/my-blog/issues"
+  },
+  "homepage": "https://github.com/vientran199/my-blog#readme",
+  "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.1",
+    "prettier": "^2.6.2"
+  }
+}
