@@ -1,9 +1,8 @@
 class SiteController {
-
     //[GET] /site
-    index(req, res){
-        res.render('site')
+    index(req, res) {
+        res.render('site');
     }
 }
 
-module.exports = new SiteController
+module.exports = new SiteController();

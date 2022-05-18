@@ -1,9 +1,8 @@
 class AuthController {
-
     //[GET] /news
-    index(req, res){
-        res.render('auth')
+    index(req, res) {
+        res.render('auth');
     }
 }
 
-module.exports = new AuthController
+module.exports = new AuthController();
