@@ -1,0 +1,49 @@
+POST http://localhost:3000/api/auth/create
+Content-Type: application/json
+
+{
+    "fullName": "abc",
+    "email": "ac@abc",
+    "password": "123"
+}
+
+
+###
+
+GET http://localhost:3000/api/auth
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2MjhkZWQ4NTA1NTM2ZTI4MWQ4ZTYyYzMiLCJpYXQiOjE2NTM0Njg3Mjl9.qhBgzlK-nlEsaJyqq1MpA2fLNzFlvO1I1YjVrQ0BfLE
+
+###
+
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "abc111111@abc",
+    "password": "123"
+}
+
+
+###
+
+POST http://localhost:3000/api/post/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2MjhkZWQ4NTA1NTM2ZTI4MWQ4ZTYyYzMiLCJpYXQiOjE2NTM0Njg3Mjl9.qhBgzlK-nlEsaJyqq1MpA2fLNzFlvO1I1YjVrQ0BfLE
+
+{
+    "title": "1231",
+    "imageCover": "123",
+    "description" : "akjshgd",
+    "images" : [
+        {
+            "image": "asjd",
+            "description": "kjahsd"
+        },
+        {
+            "image": "asjd",
+            "description": "kjahsd"
+        }
+    ]
+}

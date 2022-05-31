@@ -13,7 +13,16 @@
   },
   "author": "",
   "license": "ISC",
-  
+  "_comment1": "Đây là comment: khi thực hiện git add, thì câu lệnh này sẽ chạy",
+  "lint-staged": {
+    "server/src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
+  },
+  "_comment2": "Đây là comment: khi thực hiện git commit, câu lệnh này sẽ chạy",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run beautiful"
+    }
+  },
   "bugs": {
     "url": "https://github.com/vientran199/my-blog/issues"
   },

@@ -1,0 +1,35 @@
+@import 'normalize.css';
+
+:root{
+    --primary: #8E44AD;
+    --white: #fff;
+    --text-color: #34495E;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html{
+font-size: 62.5%;
+}
+
+body{
+    // font-family: var(--font-family);
+    font-size: 1.6rem;
+    line-height: 1.5;
+    text-rendering: optimizeSpeed; //tối ưu hóa hiển thị tfont khi tải không kịp
+    // overflow-y: overlay;
+}
+
+button,input,[tabindex]{
+    border: none;
+    outline: none;
+}
+
+a{
+    text-decoration: none;
+    color: var(--text-color);
+}
