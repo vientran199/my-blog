@@ -1,9 +1,12 @@
 @import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 :root{
     --primary: #8E44AD;
     --white: #fff;
     --text-color: #34495E;
+    --width-layout: 1150px;
+    --font-family: 'Roboto', sans-serif;
 }
 
 *{
@@ -16,8 +19,39 @@ html{
 font-size: 62.5%;
 }
 
+// Scrollbar CSS
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
+}
+
 body{
-    // font-family: var(--font-family);
+    font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed; //tối ưu hóa hiển thị tfont khi tải không kịp
@@ -32,4 +66,16 @@ button,input,[tabindex]{
 a{
     text-decoration: none;
     color: var(--text-color);
+}
+
+::-webkit-input-placeholder { /* Edge */
+    color: rgba(28, 28, 28,.7);
+}
+  
+:-ms-input-placeholder { /* Internet Explorer */
+    color: rgba(28, 28, 28,.7);
+}
+  
+::placeholder {
+    color: rgba(28, 28, 28,.7);
 }

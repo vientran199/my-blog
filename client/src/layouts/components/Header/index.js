@@ -1,9 +1,3 @@
-// import {
-//     faBell,
-//     faMagnifyingGlass,
-//     faMessage,
-// } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import Tippy from '@tippyjs/react';
@@ -19,7 +13,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 function Header() {
-    const currentUser = true;
+    const currentUser = false;
 
     return (
         <header className={cx('wrapper')}>
@@ -68,23 +62,33 @@ function Header() {
                             >
                                 Viết bài
                             </Button>
-                            <Link to={'/profile'}>
+                            <Link to={config.routes.profile}>
                                 <img
                                     className={cx('avatar')}
                                     src={images.noImage}
                                     alt={'avatar'}
                                 />
                             </Link>
-                            <Link to={'/profile'} className={cx('name')}>
+                            <Button to={config.routes.profile} text>
                                 Tran Van Vien
-                            </Link>
+                            </Button>
                         </>
                     ) : (
                         <>
-                            <Button rounded outline>
+                            <Button
+                                to={config.routes.login}
+                                rounded
+                                outline
+                                small
+                            >
                                 Log in
                             </Button>
-                            <Button rounded outline>
+                            <Button
+                                to={config.routes.register}
+                                rounded
+                                outline
+                                small
+                            >
                                 Register
                             </Button>
                         </>

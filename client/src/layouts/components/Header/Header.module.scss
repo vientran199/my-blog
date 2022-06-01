@@ -7,11 +7,12 @@
 }
 
 .inner{
-    width: 1150px;
+    width: var(--width-layout);
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0 10px;
     // background-color: rgb(207, 207, 207);
 }
 
@@ -48,14 +49,4 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
-}
-
-.name{
-    font-size: 1.6rem;
-    padding: 5px;
-    color: var(--primary);
-}
-.name:hover{
-    text-decoration: underline;
-    text-decoration-color: var(--primary);
 }

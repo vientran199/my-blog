@@ -6,20 +6,23 @@
     padding: 9px 14px;
     border-radius: 4px;
     font-size: 1.6rem;
-    // font-family: var(--font-family);
+    font-family: var(--font-family);
     font-weight: 700;
     cursor: pointer;
     background-color: var(--white);
     border: 1px solid transparent;
     user-select: none;
-    + .wrapper {
-        margin-left: 8px;
+    + .wrapper{
+        margin-left: 15px;
     }
+    
     &.disabled {
         pointer-events: none;
         opacity: 0.5;
     }
 }
+
+
 .icon + .title,
 .title + .icon {
     margin-left: 5px;
@@ -27,7 +30,7 @@
 
 .icon {
     display: inline-block;
-    width: 20px;
+    width: 25px;
     text-align: center;
 }
 
@@ -70,7 +73,8 @@
 
 // Button sizes
 .small {
-    min-width: 88px;
+    min-width: 130px;
+    height: 40px;
     padding: 4px 16px;
 }
 .large {
