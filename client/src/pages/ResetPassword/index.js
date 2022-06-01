@@ -13,8 +13,8 @@ function ResetPassword() {
         <div className={cx('wrapper')}>
             <h3 className={cx('heading')}>Reset your password</h3>
             <p className={cx('script')}>
-                The verification email will be sent to the mailbox Please check
-                it.
+                The verification email will be sent to the mailbox. <br />
+                Please check it.
             </p>
             <TextInput
                 rounded
