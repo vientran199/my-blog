@@ -62,7 +62,7 @@ function Login() {
                 Login with Facebook
             </Button>
             <Button
-                className={cx('login-btn')}
+                className={cx('login-btn', 'mb')}
                 rounded
                 outline
                 small
@@ -70,6 +70,17 @@ function Login() {
             >
                 Login with Google
             </Button>
+
+            <div className={cx('register-link')}>
+                <span>Don't have a account?</span>
+                <Button
+                    to={config.routes.register}
+                    className={cx('forgot-password')}
+                    text
+                >
+                    Register now
+                </Button>
+            </div>
         </div>
     );
 }

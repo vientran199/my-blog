@@ -5,13 +5,12 @@
 }
 .container{
     width: var(--width-layout);
-    margin-top: calc(var(--height-header) + 80px);
+    margin-top: calc(var(--height-header) + 41px);
     padding: 0 10px;
 }
 .content{
     display: flex;
     flex-direction: column;
-    margin: 20px auto;
-    margin-bottom: 30px;
-    width: 400px;
+    margin: 30px auto;
+    margin-bottom: 50px;
 }

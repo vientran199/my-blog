@@ -12,10 +12,11 @@
     background-color: var(--white);
     border: 1px solid transparent;
     user-select: none;
-    + .wrapper{
+
+    +.wrapper {
         margin-left: 15px;
     }
-    
+
     &.disabled {
         pointer-events: none;
         opacity: 0.5;
@@ -23,8 +24,8 @@
 }
 
 
-.icon + .title,
-.title + .icon {
+.icon+.title,
+.title+.icon {
     margin-left: 5px;
 }
 
@@ -39,32 +40,61 @@
     border-radius: 999px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
     border-color: rgba(22, 24, 35, 0.12);
+
     &:hover {
         border-color: rgba(22, 24, 35, 0.2);
         background-color: rgba(22, 24, 35, 0.03);
     }
 }
+
 .primary {
     color: var(--white);
     background-color: var(--primary);
     border-color: var(--primary);
+
     &:hover {
         border-color: var(--primary);
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)), #fe2c55;
+        background: #2980b9;
     }
 }
+
+.slideup {
+    position: relative;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    &::after {
+        content: "";
+        position: absolute;
+        height: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        border-radius: inherit;
+        border-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255, 255, 255, 0.15);
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+    &:hover::after{
+        height: 100%;
+    }
+}
+
 .outline {
     color: var(--primary);
     border-color: currentColor;
+
     &:hover {
         border-color: currentColor;
         background-color: rgba(254, 44, 85, 0.06);
     }
 }
+
 .text {
-    >.title{
+    >.title {
         color: var(--primary);
     }
+
     &:hover {
         text-decoration: underline;
         text-decoration-color: var(--primary);
@@ -77,6 +107,7 @@
     height: 40px;
     padding: 4px 16px;
 }
+
 .large {
     padding: 14px 16px;
     min-width: 140px;

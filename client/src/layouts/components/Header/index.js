@@ -4,16 +4,33 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 
 import images from '~/assets/images';
-import { InboxIcon, MessageIcon, SearchIcon } from '~/components/Icon';
+import { InboxIcon, MessageIcon } from '~/components/Icon';
 import { Link } from 'react-router-dom';
 import config from '~/config';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import Search from '../Search';
+import NavMenus from './NavMenus';
 
 const cx = classNames.bind(styles);
+
+const MENU = [
+    {
+        path: '/',
+        title: 'Home',
+    },
+    {
+        path: '/about-us',
+        title: 'About us',
+    },
+    {
+        path: '/contact',
+        title: 'Contact',
+    },
+];
 function Header() {
-    const currentUser = false;
+    const currentUser = true;
 
     return (
         <header className={cx('wrapper')}>
@@ -28,15 +45,7 @@ function Header() {
                 <div className={cx('actions')}>
                     {currentUser ? (
                         <>
-                            <Tippy
-                                delay={[0, 100]}
-                                placement="bottom"
-                                content="Search"
-                            >
-                                <button className={cx('action-btn')}>
-                                    <SearchIcon />
-                                </button>
-                            </Tippy>
+                            <Search />
                             <Tippy
                                 delay={[0, 100]}
                                 placement="bottom"
@@ -95,6 +104,7 @@ function Header() {
                     )}
                 </div>
             </div>
+            {currentUser && <NavMenus menus={MENU} />}
         </header>
     );
 }
