@@ -27,8 +27,8 @@ class AuthController {
             });
         }
     }
-    //[post] /create
-    async create(req, res) {
+    //[post] /register
+    async register(req, res) {
         try {
             const { fullName, email, password } = req.body;
             const author = await Auth.findOne({ email: email });
