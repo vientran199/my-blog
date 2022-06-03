@@ -1,17 +1,43 @@
 import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FacebookIcon, GoogleIcon } from '~/components/Icon';
 import classNames from 'classnames/bind';
+import { useContext, useState } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
 
 import config from '~/config';
 import Button from '~/components/Button';
 import TextInput from '~/components/TextInput';
 import styles from './Login.module.scss';
-
-import { FacebookIcon, GoogleIcon } from '~/components/Icon';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Login() {
+    const { loginUser } = useContext(AuthContext);
+
+    const nav = useNavigate();
+    const [loginForm, setLoginForm] = useState({
+        email: '',
+        password: '',
+    });
+
+    const handleLogin = async () => {
+        await loginUser(loginForm);
+        nav('/');
+    };
+
+    const handleChange = (e) => {
+        const target = e.target;
+        const name = target.name;
+        const value = target.value;
+        setLoginForm((prev) => {
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
+    };
     return (
         <div className={cx('wrapper')}>
             <h3 className={cx('heading')}>Wellcome back</h3>
@@ -23,6 +49,9 @@ function Login() {
                 leftIcon={<FontAwesomeIcon icon={faUser} />}
                 small
                 className={cx('mb')}
+                name="email"
+                value={loginForm.email}
+                onChange={handleChange}
                 placeholder="Enter your email"
                 // error={'Loi'}
             />
@@ -31,6 +60,9 @@ function Login() {
                 rounded
                 leftIcon={<FontAwesomeIcon icon={faKey} />}
                 small
+                name="password"
+                value={loginForm.password}
+                onChange={handleChange}
                 placeholder="Enter your password"
             />
 
@@ -47,7 +79,13 @@ function Login() {
                     Forgot password?
                 </Button>
             </div>
-            <Button className={cx('login-btn')} rounded outline small>
+            <Button
+                className={cx('login-btn')}
+                rounded
+                outline
+                small
+                onClick={handleLogin}
+            >
                 Login
             </Button>
 

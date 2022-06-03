@@ -5,13 +5,18 @@ import 'tippy.js/dist/tippy.css';
 
 import images from '~/assets/images';
 import { InboxIcon, MessageIcon } from '~/components/Icon';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import {
+    faArrowRightFromBracket,
+    faPlus,
+} from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import NavMenus from './NavMenus';
+import { useContext } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
 
 const cx = classNames.bind(styles);
 
@@ -30,8 +35,14 @@ const MENU = [
     },
 ];
 function Header() {
-    const currentUser = true;
+    const { authState, logoutUser } = useContext(AuthContext);
+    const currentUser = authState.user;
 
+    const nav = useNavigate();
+    const handleLogout = () => {
+        logoutUser();
+        nav('/');
+    };
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -81,6 +92,14 @@ function Header() {
                             <Button to={config.routes.profile} text>
                                 Tran Van Vien
                             </Button>
+                            <button
+                                className={cx('action-btn', 'log-out')}
+                                onClick={handleLogout}
+                            >
+                                <FontAwesomeIcon
+                                    icon={faArrowRightFromBracket}
+                                />
+                            </button>
                         </>
                     ) : (
                         <>
@@ -104,7 +123,7 @@ function Header() {
                     )}
                 </div>
             </div>
-            {currentUser && <NavMenus menus={MENU} />}
+            <NavMenus menus={MENU} />
         </header>
     );
 }

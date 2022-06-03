@@ -1,0 +1,113 @@
+.card-wrapper{
+    width: 300px;
+    border-radius: 0px;
+
+}
+.card {
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 250px;
+  max-width: 310px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #000000;
+  text-align: left;
+  font-size: 1.6rem;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
+
+  figcaption {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    padding: 15px 15px 30px;
+    background-color: #ffffff;
+  }
+
+  .date {
+    background-color: var(--primary);
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: #fff;
+    min-height: 48px;
+    min-width: 48px;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.card .date span {
+  display: block;
+  line-height: 2.4rem;
+}
+.card .date .month {
+  font-size: 1.4rem;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.card h3,
+.card p {
+  margin: 0;
+  padding: 0;
+}
+.card h3 {
+  min-height: 50px;
+  margin-bottom: 10px;
+  margin-left: 60px;
+  display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.card p {
+  font-size: 0.8em;
+  margin-bottom: 20px;
+  line-height: 1.6em;
+}
+.card footer {
+    display: flex;
+    justify-content: right;
+  padding: 0 25px;
+  background-color: var(--primary);
+  color: #e6e6e6;
+  font-size: 0.8em;
+  line-height: 30px;
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.card footer > div {
+  margin-left: 10px;
+}
+//sửa
+.card footer span {
+  margin-left: 5px;
+}
+
+.card a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+.card:hover img{
+  -webkit-transform: scale(1.15);
+  transform: scale(1.15);
+}

@@ -5,7 +5,7 @@
     --primary: #8E44AD;
     --white: #fff;
     --text-color: #34495E;
-    --width-layout: 1150px;
+    --width-layout: 1250px;
     --height-header: 70px;
     --font-family: 'Roboto', sans-serif;
 }
@@ -56,7 +56,7 @@ body{
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed; //tối ưu hóa hiển thị tfont khi tải không kịp
-    // overflow-y: overlay;
+    overflow-y: overlay;
 }
 
 button,input,[tabindex]{
@@ -79,4 +79,20 @@ a{
   
 ::placeholder {
     color: rgba(28, 28, 28,.7);
+}
+
+//autocomplete cc
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+//   border: 1px solid green;
+  -webkit-text-fill-color: currentColor;
+//   -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
 }

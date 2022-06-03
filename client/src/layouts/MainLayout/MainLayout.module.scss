@@ -4,13 +4,6 @@
     align-items: center;
 }
 .container{
-    width: var(--width-layout);
+    width: 100%;
     margin-top: calc(var(--height-header) + 41px);
-    padding: 0 10px;
-}
-.content{
-    display: flex;
-    flex-direction: column;
-    margin: 30px auto;
-    margin-bottom: 50px;
 }

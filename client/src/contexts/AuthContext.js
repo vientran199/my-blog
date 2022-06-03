@@ -1,19 +1,93 @@
-import { createContext, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 
-import reducer from '~/reducers';
+import setAuthToken from '~/utils/setAuthToken';
 import { authReducer } from '~/reducers/AuthReducer';
+import * as authServices from '~/services/authServices';
+import { LOCAL_STORAGE_TOKEN_NAME } from './Constans';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
     const [authState, dispatch] = useReducer(authReducer, {
-        init: 'test',
+        user: null,
+        isAuthenticated: false,
     });
 
-    console.log('state:', authState);
-    console.log('dispatch:', dispatch({ type: 'a', payload: 'test' }));
+    const loadUser = async () => {
+        if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+            setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+        }
+        try {
+            // const data = await authServices.me();
+            const { data } = await axios.get(
+                `${process.env.REACT_APP_BASE_URL}auth`,
+            );
 
-    const authContextData = { authState };
+            if (data.success) {
+                dispatch({
+                    type: 'SET_AUTH',
+                    payload: {
+                        isAuthenticated: true,
+                        user: true,
+                    },
+                });
+            }
+        } catch (error) {
+            localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+            setAuthToken(null);
+            dispatch({
+                type: 'SET_AUTH',
+                payload: { isAuthenticated: false, user: null },
+            });
+        }
+    };
+
+    useEffect(() => {
+        loadUser();
+    }, []);
+
+    const loginUser = async (userForm) => {
+        try {
+            const data = await authServices.login(userForm);
+            console.log('login', data);
+            if (data.success) {
+                localStorage.setItem(
+                    LOCAL_STORAGE_TOKEN_NAME,
+                    data.accessToken,
+                );
+                await loadUser();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const registerUser = async (userForm) => {
+        try {
+            const data = await authServices.register(userForm);
+            console.log(data);
+            if (data.success) {
+                localStorage.setItem(
+                    LOCAL_STORAGE_TOKEN_NAME,
+                    data.accessToken,
+                );
+                await loadUser();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const logoutUser = () => {
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+        dispatch({
+            type: 'SET_AUTH',
+            payload: { isAuthenticated: false, user: null },
+        });
+    };
+
+    const authContextData = { authState, loginUser, registerUser, logoutUser };
     return (
         <AuthContext.Provider value={authContextData}>
             {children}

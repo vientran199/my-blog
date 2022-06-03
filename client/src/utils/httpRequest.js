@@ -10,7 +10,7 @@ export const get = async (path, option) => {
 };
 
 export const post = async (path, option) => {
-    const response = await httpRequest.get(path, option);
+    const response = await httpRequest.post(path, option);
     return response.data;
 };
 
