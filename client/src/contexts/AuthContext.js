@@ -50,7 +50,6 @@ const AuthContextProvider = ({ children }) => {
     const loginUser = async (userForm) => {
         try {
             const data = await authServices.login(userForm);
-            console.log('login', data);
             if (data.success) {
                 localStorage.setItem(
                     LOCAL_STORAGE_TOKEN_NAME,
@@ -58,15 +57,16 @@ const AuthContextProvider = ({ children }) => {
                 );
                 await loadUser();
             }
+            return data;
         } catch (error) {
-            console.log(error);
+            console.log('error', error);
         }
     };
 
     const registerUser = async (userForm) => {
         try {
             const data = await authServices.register(userForm);
-            console.log(data);
+
             if (data.success) {
                 localStorage.setItem(
                     LOCAL_STORAGE_TOKEN_NAME,
@@ -74,6 +74,7 @@ const AuthContextProvider = ({ children }) => {
                 );
                 await loadUser();
             }
+            return data;
         } catch (error) {
             console.log(error);
         }

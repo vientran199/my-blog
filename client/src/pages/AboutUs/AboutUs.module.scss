@@ -1,0 +1,145 @@
+.content{
+    margin: 0px auto;
+}
+
+.heading{
+    font-family: var(--font-family);
+    font-size: 1.6rem;
+    letter-spacing: 2px;
+    word-spacing: 4px;
+    font-weight: 300;
+    color: var(--primary);
+    text-align: center;
+    padding: 5rem;
+}
+.heading-logo{
+    height: 60px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.main{
+    position: relative;
+    width: var(--width-layout);
+    min-height: 200px;
+    color: var(--white);
+    background-color: #3498DB;
+    margin: 0 auto;
+    padding: 20px 0;
+    &::after{
+        content: '';
+        height: 50%;
+        width: 8px;
+        background-color: var(--white);
+        position: absolute;
+        top: 0;
+        right: 200px;
+        z-index: 1;
+    }
+    &::before{
+        content: '';
+        height: 50%;
+        width: 8px;
+        background-color: var(--white);
+        position: absolute;
+        bottom: 0;
+        left: 200px;
+    }
+}
+
+.tagline{
+    min-width: 35%;
+    max-width: 40%;
+    font-size: 2.8rem;
+    padding: 20px;
+    h4{
+        font-weight: 300;
+    }
+    p{
+        font-size: 1.6rem;
+        font-weight: 300;
+    }
+}
+
+.image{
+    width: 550px;
+    object-fit: cover;
+}
+.para-1,
+.para-2{
+    display: flex;
+}
+
+.para-1{
+    padding-top: 70px;
+    justify-content: center;
+    .image{
+        margin-left: 50px;
+        margin-right: 20px;
+        z-index: 2;
+    }
+}
+
+.para-2{
+    flex-direction: column;
+    align-items: center;
+    margin-top: -60px;
+    .image{
+        z-index: 3;
+    }
+}
+
+.para-3{
+    margin-top: 40px;
+    margin-left: 250px;
+}
+
+.casourel{
+    text-align: right;
+    padding: 50px 0;
+    .image{
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        margin-left: 20px;
+    }
+}
+
+.contact{
+    width: var(--width-layout);
+    color: #2C3E50;
+    background-color: #3498DB;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding: 100px;
+    text-align: center;
+    .heading-contact{
+        font-weight: 400;
+        font-size: 3.8rem;
+        letter-spacing: 1px;
+        word-spacing: 3px;
+        
+    }
+
+    p{
+        font-weight: 400;
+        letter-spacing: 1px;
+        word-spacing: 2px;
+        margin: 30px auto;
+    }
+}
+
+.social-media{
+    svg{
+        width: 33px;
+        height: 33px;
+    }
+}
+
+.social-media a{
+    width: 33px;
+    height: 33px;
+    color: #2C3E50;
+    margin-right: 10px;
+    cursor: pointer;
+}

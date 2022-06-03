@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FacebookIcon, GoogleIcon } from '~/components/Icon';
 import classNames from 'classnames/bind';
 import { useContext, useState } from 'react';
-import { AuthContext } from '~/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
+import { AuthContext } from '~/contexts/AuthContext';
 import config from '~/config';
 import Button from '~/components/Button';
 import TextInput from '~/components/TextInput';
 import styles from './Login.module.scss';
-import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -23,8 +23,12 @@ function Login() {
     });
 
     const handleLogin = async () => {
-        await loginUser(loginForm);
-        nav('/');
+        const data = await loginUser(loginForm);
+        if (data.success) {
+            nav('/');
+        } else {
+            alert(data.message);
+        }
     };
 
     const handleChange = (e) => {

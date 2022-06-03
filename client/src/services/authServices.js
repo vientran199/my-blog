@@ -6,6 +6,7 @@ export const me = async () => {
         return response;
     } catch (error) {
         console.log(error);
+        return error.response.data;
     }
 };
 export const login = async (userForm) => {
@@ -14,6 +15,7 @@ export const login = async (userForm) => {
         return response;
     } catch (error) {
         console.log(error);
+        return error.response.data;
     }
 };
 
@@ -23,5 +25,6 @@ export const register = async (userForm) => {
         return response;
     } catch (error) {
         console.log(error);
+        return error.response.data;
     }
 };
