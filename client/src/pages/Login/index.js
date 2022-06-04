@@ -49,10 +49,10 @@ function Login() {
                 Sign in to get the most out of Myblog.
             </p>
             <TextInput
+                className={cx('mb', 'input-control')}
                 rounded
                 leftIcon={<FontAwesomeIcon icon={faUser} />}
                 small
-                className={cx('mb')}
                 name="email"
                 value={loginForm.email}
                 onChange={handleChange}
@@ -61,10 +61,12 @@ function Login() {
             />
 
             <TextInput
+                className={cx('input-control')}
                 rounded
                 leftIcon={<FontAwesomeIcon icon={faKey} />}
                 small
                 name="password"
+                type="password"
                 value={loginForm.password}
                 onChange={handleChange}
                 placeholder="Enter your password"

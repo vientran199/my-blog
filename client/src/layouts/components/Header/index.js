@@ -76,6 +76,7 @@ function Header() {
                                 </button>
                             </Tippy>
                             <Button
+                                to={'/write'}
                                 outline
                                 className={cx('add-btn')}
                                 leftIcon={<FontAwesomeIcon icon={faPlus} />}

@@ -44,20 +44,20 @@ function Register() {
             <h3 className={cx('heading')}>Create your account</h3>
             <p className={cx('script')}>Please enter info to create account.</p>
             <TextInput
+                className={cx('mb', 'input-control')}
                 rounded
                 leftIcon={<FontAwesomeIcon icon={faEnvelope} />}
                 small
                 name="email"
                 value={registerForm.email}
                 onChange={handleChange}
-                className={cx('mb')}
                 placeholder="Enter your email"
                 // error={'Loi'}
             />
             <TextInput
                 rounded
                 small
-                className={cx('mb')}
+                className={cx('mb', 'input-control')}
                 leftIcon={<FontAwesomeIcon icon={faUser} />}
                 name="fullName"
                 value={registerForm.fullName}
@@ -67,7 +67,7 @@ function Register() {
             />
 
             <TextInput
-                className={cx('mb')}
+                className={cx('mb', 'input-control')}
                 rounded
                 small
                 leftIcon={<FontAwesomeIcon icon={faKey} />}
@@ -77,7 +77,7 @@ function Register() {
                 placeholder="Enter your password"
             />
             <TextInput
-                className={cx('mb')}
+                className={cx('mb', 'input-control')}
                 rounded
                 small
                 leftIcon={<FontAwesomeIcon icon={faKey} />}

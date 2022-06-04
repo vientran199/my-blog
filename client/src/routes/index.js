@@ -8,6 +8,7 @@ import ResetPassword from '~/pages/ResetPassword';
 import MainLayout, { AuthLayout } from '~/layouts';
 import AboutUs from '~/pages/AboutUs';
 import Contact from '~/pages/Contact';
+import Write from '~/pages/Write';
 // import { Fragment } from 'react';
 
 const publicRoutes = [
@@ -23,6 +24,8 @@ const publicRoutes = [
     },
 ];
 
-const privateRoutes = [];
+const privateRoutes = [
+    { path: config.routes.write, component: Write, layout: MainLayout },
+];
 
 export { publicRoutes, privateRoutes };

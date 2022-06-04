@@ -1,6 +1,6 @@
 .content{
     margin: 0px auto;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
 }
 
 .heading{
@@ -11,10 +11,10 @@
     font-weight: 300;
     color: var(--primary);
     text-align: center;
-    padding: 5rem;
+    padding: 2rem;
 }
 .heading-title{
-    font-size: 3.6rem;
+    font-size: 3.2rem;
     font-weight: 500;
 }
 
@@ -38,7 +38,7 @@
 }
 
 .title{
-    font-size: 3.6rem;
+    font-size: 3.2rem;
     font-weight: 400;
     letter-spacing: 1px;
 }
@@ -50,14 +50,17 @@
 
 .row{
     width: 100%;
-    margin: 30px 0;
+    margin: 15px 0;
     h5{
         font-size: 2rem;
         font-weight: 400;
         text-transform: uppercase;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
     }
     .icon{
+        font-size: 1.8rem;
         margin-right: 10px;
     }
     p{
@@ -68,7 +71,7 @@
 .follow-us{
     .links{
         display: flex;
-        margin-top: 30px;
+        margin-top: 20px;
     }
     .icon{
         font-size: 3rem;
@@ -86,20 +89,19 @@
     .row{
         display: flex;
         justify-content: space-between;
-        margin: 40px 0;
-        margin-bottom: 60px;
+        margin-bottom: 40px;
     }
 }
 
 .row .colum{
     width: 48%;
 }
-.form-contact .button-submit{
-    text-align: right;
-}
+
 .button-submit{
     font-size: 1.6rem;
     font-weight: 400;
     padding-left: 25px;
     padding-right: 25px;
+    margin-top: 20px;
+    margin-left: 75%;
 }

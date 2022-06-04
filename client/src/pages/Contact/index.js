@@ -1,6 +1,4 @@
 import classNames from 'classnames/bind';
-
-import styles from './Contact.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faEnvelope,
@@ -12,6 +10,8 @@ import {
     faGithubSquare,
     faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
+
+import styles from './Contact.module.scss';
 import TextInput from '~/components/TextInput';
 import Button from '~/components/Button';
 
@@ -128,6 +128,7 @@ function Contact() {
                         <div className={cx('row')}>
                             <TextInput
                                 lable={'Message'}
+                                tag="textarea"
                                 className={cx('input-form')}
                                 line
                                 small

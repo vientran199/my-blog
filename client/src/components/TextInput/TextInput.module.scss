@@ -13,6 +13,12 @@
         flex: 1;
         background-color: transparent;
     }
+    textarea{
+        width: 100%;
+        flex: 1;
+        background-color: transparent;
+        resize: none;
+    }
 }
 
 .icon{
@@ -28,7 +34,7 @@
     color: var(--primary);
     border-radius: 999px;
     border: 1px solid transparent;
-    border-color: #cea0e1;
+    border-color: #d5bfdd;
 }
 .rounded:focus-within{
     border-color: var(--primary);
@@ -41,10 +47,13 @@
 .line{
     background-color: transparent;
     border-bottom: 2px solid transparent;
-    border-color: #cea0e1;
+    border-color: #d5bfdd;
 }
 .line:focus-within{
     border-color: var(--primary);
+    >.icon{
+        color: var(--primary);
+    }
 }
 
 .error{
@@ -59,9 +68,6 @@
     input{
         font-size: 1.6rem;
         font-weight: 400;
-        padding: 11px 20px 11px 0px;
+        padding: 4px 20px 4px 0px;
     }
-}
-.line input{
-    padding: 3px 20px 7px 0px;
 }

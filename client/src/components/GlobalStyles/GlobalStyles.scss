@@ -59,7 +59,7 @@ body{
     overflow-y: overlay;
 }
 
-button,input,[tabindex]{
+button,input,textarea,[tabindex]{
     border: none;
     outline: none;
 }

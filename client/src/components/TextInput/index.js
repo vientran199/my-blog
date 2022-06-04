@@ -7,6 +7,7 @@ const cx = classNames.bind(styles);
 
 function TextInput({
     lable,
+    tag = 'input',
     line = false,
     rounded = false,
     small = false,
@@ -29,16 +30,25 @@ function TextInput({
 
     return (
         <div className={cx('wrapper')}>
-            {lable && <lable>{lable}</lable>}
+            {lable && <label>{lable}</label>}
             <Tippy visible={!!error} placement="right" content={error}>
                 <div className={classes}>
                     {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-                    <input
-                        type="text"
-                        value={value}
-                        onChange={onChange}
-                        {...rest}
-                    />
+                    {tag === 'input' ? (
+                        <input
+                            type="text"
+                            value={value}
+                            onChange={onChange}
+                            {...rest}
+                        />
+                    ) : (
+                        <textarea
+                            value={value}
+                            onChange={onChange}
+                            rows="4"
+                            {...rest}
+                        ></textarea>
+                    )}
                 </div>
             </Tippy>
         </div>
