@@ -5,7 +5,7 @@ const siteRouter = require('./site');
 function route(app) {
     app.use('/api/auth', authRouter);
     app.use('/api/post', postRouter);
-    app.use('/', siteRouter);
+    app.use('/api', siteRouter);
 }
 
 module.exports = route;

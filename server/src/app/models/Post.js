@@ -9,6 +9,7 @@ const postSchema = new Schema(
         },
         imageCover: {
             type: String,
+            // ref: 'images',
             required: true,
         },
         description: {
@@ -19,6 +20,7 @@ const postSchema = new Schema(
             {
                 image: {
                     type: String,
+                    // ref: 'images',
                 },
                 description: {
                     type: String,

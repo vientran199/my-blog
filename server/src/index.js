@@ -1,6 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 // const morgan = require("morgan");
 const cors = require('cors');
 const { engine } = require('express-handlebars');
@@ -10,8 +11,10 @@ const db = require('./config/db');
 
 const route = require('./routes');
 //Để cho có thể được được dữ liệu json được guiử lên
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+
 // Use static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
