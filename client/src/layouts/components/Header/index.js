@@ -12,28 +12,78 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowRightFromBracket,
     faPlus,
+    faEarthAsia,
+    faUser,
+    faGear,
+    faBook,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import NavMenus from './NavMenus';
 import { useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
+import Menu from '~/components/Popper/Menu';
+
 
 const cx = classNames.bind(styles);
 
 const MENU = [
     {
-        path: '/',
+        path: config.routes.home,
         title: 'Home',
     },
     {
-        path: '/about-us',
+        path: config.routes.aboutUs,
         title: 'About us',
     },
     {
-        path: '/contact',
+        path: config.routes.contact,
         title: 'Contact',
     },
 ];
+
+const MENU_OPTION = [
+    {
+        icon: <FontAwesomeIcon icon={faUser} />,
+        to: config.routes.profile,
+        title: 'Profile',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faBook} />,
+        to: config.routes.profile,
+        title: 'Your post',
+    },
+    {
+        icon: <FontAwesomeIcon icon={faEarthAsia} />,
+        title: 'English',
+        children: {
+            title: 'Language',
+            data: [
+                {
+                    type: 'language',
+                    code: 'en',
+                    title: 'English',
+                },
+                {
+                    type: 'language',
+                    code: 'vi',
+                    title: 'Tiếng Việt',
+                },
+            ]
+        }
+    },
+    {
+        icon: <FontAwesomeIcon icon={faGear} />,
+        title: 'Setting',
+        to: "#",
+    },
+    {
+        icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
+        title: 'Log out',
+        type: 'logout',
+        separate: true,
+    },
+];
+
 function Header() {
     const { authState, logoutUser } = useContext(AuthContext);
     const currentUser = authState.user;
@@ -43,6 +93,20 @@ function Header() {
         logoutUser();
         nav('/');
     };
+
+    const handleMenuChange = (menuItem) => {
+        console.log(menuItem);
+        switch (menuItem.type) {
+            case 'language':
+                // Handle change language
+                break;
+            case 'logout':
+                handleLogout()
+                break;
+            default:
+        }
+    };
+
     return (
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
@@ -83,24 +147,18 @@ function Header() {
                             >
                                 Viết bài
                             </Button>
-                            <Link to={config.routes.profile}>
+
+                            <Menu
+                                items={MENU_OPTION}
+                                hideOnClick={true}
+                                onChange={handleMenuChange}
+                            >
                                 <img
                                     className={cx('avatar')}
                                     src={images.noImage}
                                     alt={'avatar'}
                                 />
-                            </Link>
-                            <Button to={config.routes.profile} text>
-                                Tran Van Vien
-                            </Button>
-                            <button
-                                className={cx('action-btn', 'log-out')}
-                                onClick={handleLogout}
-                            >
-                                <FontAwesomeIcon
-                                    icon={faArrowRightFromBracket}
-                                />
-                            </button>
+                            </Menu>
                         </>
                     ) : (
                         <>
