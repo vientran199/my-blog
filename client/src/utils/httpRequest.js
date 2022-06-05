@@ -1,7 +1,19 @@
 import axios from 'axios';
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans'
 
-const httpRequest = axios.create({
+const defaultOptions = {
     baseURL: process.env.REACT_APP_BASE_URL,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+};
+
+const httpRequest = axios.create(defaultOptions);
+
+httpRequest.interceptors.request.use(function (config) {
+    const token = localStorage[LOCAL_STORAGE_TOKEN_NAME];
+    config.headers.Authorization = token ? `Bearer ${token}` : '';
+    return config;
 });
 
 export const get = async (path, option) => {

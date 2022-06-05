@@ -8,6 +8,9 @@ function ImageInput({ title, value, onChange, className, ...rest }) {
     const classes = cx('file-upload', {
         [className]: className,
     });
+    const getURL = () => {
+        return URL.createObjectURL(value)
+    }
     return (
         <div className={classes}>
             <div className={cx('image-upload-wrap')}>
@@ -32,7 +35,7 @@ function ImageInput({ title, value, onChange, className, ...rest }) {
             {value && (
                 <img
                     className={cx('file-upload-image')}
-                    src={value}
+                    src={getURL()}
                     alt="your anh"
                 />
             )}

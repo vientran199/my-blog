@@ -5,17 +5,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-// import { Wrapper } from '../Popper';
 import styles from './NewsCard.module.scss';
 
 const cx = classNames.bind(styles);
 
-function NewsCard() {
+function NewsCard({ data }) {
+    const getUrl = () => {
+        const im = data.imageCover.slice(11).replace('\\', '/')
+        const url = `http://localhost:5000/${im}`
+        return url
+    }
     return (
         <figure className={cx('card')}>
             <div className={cx('image')}>
                 <img
-                    src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/pr-sample11.jpg"
+                    src={getUrl()}
                     alt="pr-sample11"
                 />
             </div>
@@ -24,10 +28,9 @@ function NewsCard() {
                     <span className={cx('day')}>28</span>
                     <span className={cx('month')}>Oct</span>
                 </div>
-                <h3 className={cx('title')}>The World Ended Yesterday </h3>
+                <h3 className={cx('title')}>{data.title} </h3>
                 <p className={cx('description')}>
-                    You know what we need, Hobbes? We need an attitude. Yeah,
-                    you can't be cool if you don't have an attitude.
+                    {data.description}
                 </p>
                 <footer>
                     <div className={cx('love')}>
