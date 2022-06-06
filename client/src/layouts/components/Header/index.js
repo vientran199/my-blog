@@ -44,7 +44,7 @@ const MENU = [
 const MENU_OPTION = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
-        to: config.routes.profile,
+        to: '/vientran',
         title: 'Profile',
     },
     {

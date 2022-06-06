@@ -4,7 +4,8 @@
 :root{
     --primary: #8E44AD;
     --white: #fff;
-    --text-color: #34495E;
+    --text-color: #050505;
+    --text-color-menu: #34495E;
     --width-layout: 1250px;
     --height-header: 70px;
     --font-family: 'Roboto', sans-serif;
@@ -53,6 +54,7 @@ html *::-webkit-scrollbar-track {
 
 body{
     font-family: var(--font-family);
+    color: var(--text-color);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed; //tối ưu hóa hiển thị tfont khi tải không kịp
@@ -66,7 +68,7 @@ button,input,textarea,[tabindex]{
 
 a{
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-color-menu);
 }
 
 ::-webkit-input-placeholder { /* Edge */

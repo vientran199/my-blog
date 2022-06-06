@@ -9,6 +9,8 @@ import MainLayout, { AuthLayout } from '~/layouts';
 import AboutUs from '~/pages/AboutUs';
 import Contact from '~/pages/Contact';
 import Write from '~/pages/Write';
+import Profile from '~/pages/Profile';
+import ProfileLayout from '~/layouts/ProfileLayout';
 // import { Fragment } from 'react';
 
 const publicRoutes = [
@@ -26,6 +28,7 @@ const publicRoutes = [
 
 const privateRoutes = [
     { path: config.routes.write, component: Write, layout: MainLayout },
+    { path: config.routes.profile, component: Profile, layout: ProfileLayout },
 ];
 
 export { publicRoutes, privateRoutes };

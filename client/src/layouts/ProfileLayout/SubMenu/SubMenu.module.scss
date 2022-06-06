@@ -1,0 +1,19 @@
+.menu{
+    border-bottom: 1px solid rgb(230, 211, 211);
+    .menu-item{
+        margin-left: 0px;
+    }
+}
+
+.menu-item{
+    border-radius: 0px;
+    transition: all 0.2s;
+    &:hover{
+        background-color: rgba(22,24,35,.05);
+        color: var(--primary);
+    }
+}
+.active{
+    color: var(--primary);
+    border-bottom: 3px solid var(--primary);
+}

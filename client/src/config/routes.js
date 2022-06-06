@@ -5,7 +5,7 @@ const routes = {
     login: '/login',
     register: '/register',
     resetPasword: '/reset-password',
-    profile: '/profile',
+    profile: '/:username',
     write: '/write',
 };
 export default routes;

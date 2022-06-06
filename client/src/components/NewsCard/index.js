@@ -9,14 +9,18 @@ import styles from './NewsCard.module.scss';
 
 const cx = classNames.bind(styles);
 
-function NewsCard({ data }) {
+function NewsCard({ data, className }) {
     const getUrl = () => {
         const im = data.imageCover.slice(11).replace('\\', '/')
         const url = `http://localhost:5000/${im}`
         return url
     }
+
+    const classes = cx('card', {
+        [className]: className
+    })
     return (
-        <figure className={cx('card')}>
+        <figure className={classes}>
             <div className={cx('image')}>
                 <img
                     src={getUrl()}
