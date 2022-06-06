@@ -8,6 +8,7 @@
 .menu-item{
     border-radius: 0px;
     transition: all 0.2s;
+    border-bottom: 3px solid transparent;
     &:hover{
         background-color: rgba(22,24,35,.05);
         color: var(--primary);

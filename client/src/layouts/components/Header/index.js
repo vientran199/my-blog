@@ -16,6 +16,7 @@ import {
     faUser,
     faGear,
     faBook,
+    faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import NavMenus from './NavMenus';
@@ -44,13 +45,8 @@ const MENU = [
 const MENU_OPTION = [
     {
         icon: <FontAwesomeIcon icon={faUser} />,
-        to: '/vientran',
-        title: 'Profile',
-    },
-    {
-        icon: <FontAwesomeIcon icon={faBook} />,
         to: config.routes.profile,
-        title: 'Your post',
+        title: 'Profile',
     },
     {
         icon: <FontAwesomeIcon icon={faEarthAsia} />,
@@ -86,7 +82,7 @@ const MENU_OPTION = [
 
 function Header() {
     const { authState, logoutUser } = useContext(AuthContext);
-    const currentUser = authState.user;
+    const currentUser = authState.isAuthenticated;
 
     const nav = useNavigate();
     const handleLogout = () => {
@@ -140,7 +136,7 @@ function Header() {
                                 </button>
                             </Tippy>
                             <Button
-                                to={'/write'}
+                                to={config.routes.write}
                                 outline
                                 className={cx('add-btn')}
                                 leftIcon={<FontAwesomeIcon icon={faPlus} />}

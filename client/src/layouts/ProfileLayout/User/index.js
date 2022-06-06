@@ -8,11 +8,13 @@ import styles from './User.module.scss';
 
 const cx = classNames.bind(styles);
 
-function User() {
+function User({ data }) {
     return (
         <aside className={cx('wrapper')}>
             <div className={cx('avatar')}><img src={images.noImage} alt="no-i" />
-                <Button className={cx('change-btn')} leftIcon={<FontAwesomeIcon icon={faCamera} />}></Button>
+                <Button className={cx('change-btn')} >
+                    <FontAwesomeIcon icon={faCamera} />
+                </Button>
             </div>
             <h4 className={cx('name')}>Tran van vien</h4>
             <div className={cx('intro')}>

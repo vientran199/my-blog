@@ -5,7 +5,6 @@ import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 function App() {
     const { authState } = useContext(AuthContext);
-    console.log('app');
     return (
         <Router>
             <div className="App">
@@ -25,7 +24,7 @@ function App() {
                             />
                         );
                     })}
-                    {authState.user &&
+                    {authState.isAuthenticated &&
                         privateRoutes.map((route, index) => {
                             const Comp = route.component;
                             const Layout = route.layout

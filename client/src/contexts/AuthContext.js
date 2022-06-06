@@ -20,7 +20,7 @@ const AuthContextProvider = ({ children }) => {
                     type: 'SET_AUTH',
                     payload: {
                         isAuthenticated: true,
-                        user: true,
+                        user: data.author,
                     },
                 });
             }

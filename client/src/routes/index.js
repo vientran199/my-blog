@@ -11,6 +11,7 @@ import Contact from '~/pages/Contact';
 import Write from '~/pages/Write';
 import Profile from '~/pages/Profile';
 import ProfileLayout from '~/layouts/ProfileLayout';
+import Saved from '~/pages/Saved';
 // import { Fragment } from 'react';
 
 const publicRoutes = [
@@ -29,6 +30,7 @@ const publicRoutes = [
 const privateRoutes = [
     { path: config.routes.write, component: Write, layout: MainLayout },
     { path: config.routes.profile, component: Profile, layout: ProfileLayout },
+    { path: config.routes.saved, component: Saved, layout: ProfileLayout },
 ];
 
 export { publicRoutes, privateRoutes };
