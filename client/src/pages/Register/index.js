@@ -52,7 +52,7 @@ function Register() {
                 value={registerForm.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                // error={'Loi'}
+            // error={'Loi'}
             />
             <TextInput
                 rounded
@@ -63,7 +63,7 @@ function Register() {
                 value={registerForm.fullName}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-                // error={'Loi'}
+            // error={'Loi'}
             />
 
             <TextInput
@@ -75,6 +75,7 @@ function Register() {
                 value={registerForm.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
+                type='password'
             />
             <TextInput
                 className={cx('mb', 'input-control')}
@@ -85,6 +86,7 @@ function Register() {
                 value={registerForm.verifyPassword}
                 onChange={handleChange}
                 placeholder="Verify your password"
+                type='password'
             />
 
             <Button

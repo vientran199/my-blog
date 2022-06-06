@@ -6,6 +6,7 @@ const verifyToken = require('../app/middleware/auth');
 const upload = require('../app/middleware/image');
 
 router.post('/create', verifyToken, upload, postController.create);
-router.get('/', verifyToken, postController.get);
+// /:postId -> detail post
+router.get('/search', verifyToken, postController.get);
 
 module.exports = router;

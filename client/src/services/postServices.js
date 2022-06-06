@@ -3,7 +3,7 @@ import * as request from '~/utils/httpRequest'
 export const getPost = async (filter) => {
     try {
         //filter all,public,private
-        const response = await request.get('post', filter);
+        const response = await request.get(`post/search?status=${filter.status}`);
         return response
     } catch (error) {
         console.log(error);

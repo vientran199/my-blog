@@ -15,8 +15,6 @@ import {
     faEarthAsia,
     faUser,
     faGear,
-    faBook,
-    faBookmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import NavMenus from './NavMenus';

@@ -41,18 +41,21 @@ class PostController {
     async get(req, res) {
         try {
             // filter: all,public,private
-            const { filter } = req.body;
-            console.log('filter', req.body);
+            const { status } = req.query;
             let valueFilter = null;
-            if (filter === 'public') {
+            if (status === 'public') {
                 valueFilter = {
                     auth: req.authId,
                     status: true,
                 };
-            } else if (filter === 'private') {
+            } else if (status === 'private') {
                 valueFilter = {
                     auth: req.authId,
                     status: false,
+                };
+            } else {
+                valueFilter = {
+                    auth: req.authId,
                 };
             }
             const posts = await Post.find(valueFilter);
