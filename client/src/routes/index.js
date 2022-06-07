@@ -12,6 +12,7 @@ import Write from '~/pages/Write';
 import Profile from '~/pages/Profile';
 import ProfileLayout from '~/layouts/ProfileLayout';
 import Saved from '~/pages/Saved';
+import DetailPost from '~/pages/DetailPost';
 // import { Fragment } from 'react';
 
 const publicRoutes = [
@@ -24,6 +25,11 @@ const publicRoutes = [
         path: config.routes.resetPasword,
         component: ResetPassword,
         layout: AuthLayout,
+    },
+    {
+        path: config.routes.detailPost,
+        component: DetailPost,
+        layout: MainLayout,
     },
 ];
 

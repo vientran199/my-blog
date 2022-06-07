@@ -57,6 +57,7 @@
         font-weight: 700;
         text-transform: uppercase;
     }
+    
 }
 
 .card .date span {
@@ -93,10 +94,10 @@
 .card footer {
     display: flex;
     justify-content: space-between;
-    padding: 0 25px;
+    padding: 0 15px;
     background-color: var(--primary);
     color: #e6e6e6;
-    font-size: 0.8em;
+    font-size: 1.4rem;
     line-height: 30px;
     text-align: right;
     position: absolute;
@@ -114,22 +115,26 @@
 .react{
     display: flex;
     div{
-        margin-left: 10px;
+        margin-left: 15px;
+        cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+        }
     }
     span{
-        margin-left: 3px;
+        margin-left: 5px;
     }
 }
+
 
 .card a {
     left: 0;
     right: 0;
     top: 0;
-    bottom: 0;
+    bottom: 40px;
     position: absolute;
     z-index: 1;
 }
-
 .card:hover img {
     -webkit-transform: scale(1.15);
     transform: scale(1.15);

@@ -7,6 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
+import { Link } from 'react-router-dom';
+import Image from '~/components/Image';
 import styles from './NewsCard.module.scss';
 
 const cx = classNames.bind(styles);
@@ -21,10 +23,15 @@ function NewsCard({ data, className }) {
     const classes = cx('card', {
         [className]: className
     })
+
+    const handleClick = () => {
+        console.log('test')
+    }
     return (
         <figure className={classes}>
+
             <div className={cx('image')}>
-                <img
+                <Image
                     src={getUrl()}
                     alt="pr-sample11"
                 />
@@ -39,7 +46,6 @@ function NewsCard({ data, className }) {
                     {data.description}
                 </p>
                 <footer>
-
                     <div className={cx('status')}>
                         <span>Status:</span>
                         <FontAwesomeIcon icon={data.status ? faEarthAsia : faLock} />
@@ -53,14 +59,14 @@ function NewsCard({ data, className }) {
                             <FontAwesomeIcon icon={faComment} />
                             <span>23</span>
                         </div>
-                        <div className={cx('views')}>
+                        <div className={cx('views')} onClick={handleClick}>
                             <FontAwesomeIcon icon={faBookmark} />
                             <span>123</span>
                         </div>
                     </div>
                 </footer>
             </figcaption>
-            <a href="/">{'  '}</a>
+            <Link to={`/post/${data._id}`} id='a'></Link>
         </figure>
     );
 }

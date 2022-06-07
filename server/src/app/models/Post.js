@@ -29,7 +29,7 @@ const postSchema = new Schema(
         ],
         auth: {
             type: Schema.Types.ObjectId,
-            ref: 'authors',
+            ref: 'author',
         },
         status: {
             type: Boolean,

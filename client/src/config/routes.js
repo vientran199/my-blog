@@ -8,5 +8,6 @@ const routes = {
     write: '/write',
     profile: '/:username',
     saved: '/:username/saved',
+    detailPost: '/post/:id',
 };
 export default routes;

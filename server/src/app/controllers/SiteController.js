@@ -16,6 +16,32 @@ class SiteController {
             });
         }
     }
+
+    async getPostById(req, res) {
+        try {
+            const { id: postId } = req.params;
+            const post = await Post.findById(postId).populate('auth', [
+                'fullName',
+            ]);
+            if (!post) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Post not found',
+                });
+            }
+
+            res.json({
+                success: true,
+                post,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: error,
+            });
+        }
+    }
 }
 
 module.exports = new SiteController();

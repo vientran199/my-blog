@@ -6,5 +6,6 @@ const router = express.Router();
 const siteController = require('../app/controllers/SiteController');
 
 router.get('/getPostsPublic', siteController.getPostsPublic);
+router.get('/post/:id', siteController.getPostById);
 
 module.exports = router;

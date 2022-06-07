@@ -11,6 +11,17 @@ export const getPost = async (filter) => {
     }
 }
 
+export const getPostById = async (id) => {
+    try {
+        //filter all,public,private
+        const response = await request.get(`post/${id}`);
+        return response
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}
+
 export const create = async (postForm) => {
     try {
         const response = await request.post('post/create', postForm);
