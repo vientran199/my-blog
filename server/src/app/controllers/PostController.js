@@ -1,5 +1,4 @@
 const Post = require('../models/Post');
-const Image = require('../models/Image');
 
 class PostController {
     //[post] /create
