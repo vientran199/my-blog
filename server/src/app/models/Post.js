@@ -33,6 +33,10 @@ const postSchema = new Schema(
             type: Boolean,
             required: true,
         },
+        react: {
+            type: Schema.Types.ObjectId,
+            ref: 'react',
+        },
     },
     {
         timestamps: { createdAt: 'create_at', updatedAt: 'update_at' },

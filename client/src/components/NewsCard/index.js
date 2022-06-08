@@ -11,10 +11,27 @@ import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 import { formatDate } from '~/helper';
 import styles from './NewsCard.module.scss';
+import * as postServices from '~/services/postServices'
+import { useContext, useState } from 'react';
+import { AuthContext } from '~/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function NewsCard({ data, className }) {
+    const { authState } = useContext(AuthContext)
+    const authId = authState.isAuthenticated ? authState.user._id : ''
+    const [checked, setChecked] = useState({
+        love: data.react.love.includes(authId),
+        marked: data.react.marked.includes(authId),
+    })
+    const [count, setCount] = useState({
+        love: data.react.love.length,
+        marked: data.react.marked.length
+    })
+
+    console.log(checked)
+    const nav = useNavigate()
     const getUrl = () => {
         const im = data.imageCover.slice(11).replace('\\', '/')
         const url = `http://localhost:5000/${im}`
@@ -25,12 +42,28 @@ function NewsCard({ data, className }) {
         [className]: className
     })
 
-    const handleClick = () => {
-        console.log('test')
+    const handleClick = async (type, id) => {
+        if (!authId) {
+            nav('/login')
+        }
+        if (data.auth === authId && type === 'marked') {
+            return
+        }
+        const res = await postServices.updateReact(type, id)
+        if (res.success) {
+            setCount(prev => ({
+                ...prev,
+                [type]: res.length
+            }))
+        }
+
+        setChecked(prev => ({
+            ...prev,
+            [type]: !prev[type]
+        }))
     }
     return (
         <figure className={classes}>
-
             <div className={cx('image')}>
                 <Image
                     src={getUrl()}
@@ -52,17 +85,17 @@ function NewsCard({ data, className }) {
                         <FontAwesomeIcon icon={data.status ? faEarthAsia : faLock} />
                     </div>
                     <div className={cx('react')}>
-                        <div className={cx('love')}>
-                            <FontAwesomeIcon icon={faHeart} />
-                            <span>623</span>
+                        <div className={cx('love')} onClick={() => handleClick('love', data._id)}>
+                            <FontAwesomeIcon icon={faHeart} className={cx(checked.love ? 'loved' : '')} />
+                            <span>{count.love}</span>
                         </div>
                         <div className={cx('commen')}>
                             <FontAwesomeIcon icon={faComment} />
-                            <span>23</span>
+                            <span>{data.react.commen.length}</span>
                         </div>
-                        <div className={cx('views')} onClick={handleClick}>
-                            <FontAwesomeIcon icon={faBookmark} />
-                            <span>123</span>
+                        <div className={cx('mark')} onClick={() => handleClick('marked', data._id)}>
+                            <FontAwesomeIcon icon={faBookmark} className={cx(checked.marked ? 'marked' : '')} />
+                            <span>{count.marked}</span>
                         </div>
                     </div>
                 </footer>

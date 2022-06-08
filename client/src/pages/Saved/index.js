@@ -15,8 +15,16 @@ function Saved() {
 
     useEffect(() => {
         const fetchApi = async () => {
-            const response = await postServices.getPost(filter);
-            setPosts(response.posts);
+            const { posts } = await postServices.getPostSaved();
+
+            setPosts(posts.map(post => ({
+                ...post.post,
+                react: {
+                    love: post.love,
+                    marked: post.marked,
+                    commen: post.commen,
+                }
+            })));
         };
         fetchApi();
     }, [filter]);

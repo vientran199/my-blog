@@ -85,7 +85,8 @@ function Header() {
     const nav = useNavigate();
     const handleLogout = () => {
         logoutUser();
-        nav('/');
+        nav('/', { replace: true });
+        window.location.reload()
     };
 
     const handleMenuChange = (menuItem) => {

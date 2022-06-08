@@ -3,7 +3,11 @@ class SiteController {
     //[GET] /post
     async getPostsPublic(req, res) {
         try {
-            const posts = await Post.find({ status: true });
+            const posts = await Post.find({ status: true }).populate('react', [
+                'love',
+                'marked',
+                'commen',
+            ]);
             res.json({
                 success: true,
                 posts,

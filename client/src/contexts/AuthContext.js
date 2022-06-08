@@ -70,7 +70,7 @@ const AuthContextProvider = ({ children }) => {
         }
     };
 
-    const logoutUser = () => {
+    const logoutUser = async () => {
         localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
         dispatch({
             type: 'SET_AUTH',

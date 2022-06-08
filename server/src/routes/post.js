@@ -6,7 +6,8 @@ const verifyToken = require('../app/middleware/auth');
 const upload = require('../app/middleware/image');
 
 router.post('/create', verifyToken, upload, postController.create);
-// /:postId -> detail post
 router.get('/search', verifyToken, postController.get);
+router.get('/getPostSaved', verifyToken, postController.getPostSaved);
+router.put('/:id/updateReact', verifyToken, postController.updateReact);
 
 module.exports = router;
