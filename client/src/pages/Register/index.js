@@ -9,6 +9,7 @@ import Button from '~/components/Button';
 import TextInput from '~/components/TextInput';
 import styles from './Register.module.scss';
 import { AuthContext } from '~/contexts/AuthContext';
+import { isEmail } from '~/helper';
 
 const cx = classNames.bind(styles);
 
@@ -20,11 +21,30 @@ function Register() {
         password: '',
         verifyPassword: '',
     });
+    const [errorRegisterForm, setErrorRegisterForm] = useState({
+        fullName: '',
+        email: '',
+        password: '',
+        verifyPassword: '',
+    });
 
     const nav = useNavigate();
+
     const handleRegister = async () => {
-        await registerUser(registerForm);
-        nav('/');
+        if (!validateFrom()) {
+            return
+        }
+        const response = await registerUser(registerForm);
+        if (response.success) {
+            nav('/');
+        }
+        else {
+            setErrorRegisterForm(prev => ({
+                ...prev,
+                email: 'Email already exists'
+            }))
+            alert('Register fail')
+        }
     };
 
     const handleChange = (e) => {
@@ -39,6 +59,68 @@ function Register() {
         });
     };
 
+    const validateFrom = () => {
+        let isSubmittable = true
+        const valuesKeys = Object.keys(registerForm)
+        valuesKeys.forEach(key => {
+            if (registerForm[key] === "") {
+                setErrorRegisterForm(prev => ({
+                    ...prev,
+                    [key]: 'Required'
+                }))
+                isSubmittable = false
+            }
+        })
+        if (!isEmail(registerForm.email) && registerForm.email) {
+            setErrorRegisterForm(prev => ({
+                ...prev,
+                email: 'Email is invalid'
+            }))
+            isSubmittable = false
+        } else if (isEmail(registerForm.email) && registerForm.email) {
+            setErrorRegisterForm(prev => ({
+                ...prev,
+                email: ''
+            }))
+        }
+        if (registerForm.fullName) {
+            setErrorRegisterForm(prev => ({
+                ...prev,
+                fullName: ''
+            }))
+        }
+        if (registerForm.password || registerForm.verifyPassword) {
+            if (registerForm.password && registerForm.verifyPassword && registerForm.password !== registerForm.verifyPassword) {
+                setErrorRegisterForm(prev => ({
+                    ...prev,
+                    password: '',
+                    verifyPassword: 'Password not match'
+                }))
+                isSubmittable = false
+            }
+            else if (registerForm.password && registerForm.verifyPassword && registerForm.password === registerForm.verifyPassword) {
+                setErrorRegisterForm(prev => ({
+                    ...prev,
+                    password: '',
+                    verifyPassword: ''
+                }))
+            } else if (registerForm.password) {
+                setErrorRegisterForm(prev => ({
+                    ...prev,
+                    password: '',
+                }))
+                isSubmittable = false
+            } else {
+                setErrorRegisterForm(prev => ({
+                    ...prev,
+                    verifyPassword: '',
+                }))
+                isSubmittable = false
+            }
+
+        }
+        return isSubmittable
+    }
     return (
         <div className={cx('wrapper')}>
             <h3 className={cx('heading')}>Create your account</h3>
@@ -52,7 +134,7 @@ function Register() {
                 value={registerForm.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-            // error={'Loi'}
+                error={errorRegisterForm.email}
             />
             <TextInput
                 rounded
@@ -63,7 +145,7 @@ function Register() {
                 value={registerForm.fullName}
                 onChange={handleChange}
                 placeholder="Enter your full name"
-            // error={'Loi'}
+                error={errorRegisterForm.fullName}
             />
 
             <TextInput
@@ -76,6 +158,7 @@ function Register() {
                 onChange={handleChange}
                 placeholder="Enter your password"
                 type='password'
+                error={errorRegisterForm.password}
             />
             <TextInput
                 className={cx('mb', 'input-control')}
@@ -87,6 +170,7 @@ function Register() {
                 onChange={handleChange}
                 placeholder="Verify your password"
                 type='password'
+                error={errorRegisterForm.verifyPassword}
             />
 
             <Button

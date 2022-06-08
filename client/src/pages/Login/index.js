@@ -10,19 +10,35 @@ import config from '~/config';
 import Button from '~/components/Button';
 import TextInput from '~/components/TextInput';
 import styles from './Login.module.scss';
+import { isEmail } from '~/helper';
 
 const cx = classNames.bind(styles);
 
 function Login() {
     const { loginUser } = useContext(AuthContext);
-
     const nav = useNavigate();
     const [loginForm, setLoginForm] = useState({
         email: '',
         password: '',
     });
+    const [errorLoginForm, setErrorLoginForm] = useState({
+        email: '',
+        password: '',
+    });
 
     const handleLogin = async () => {
+        if (!validateForm(loginForm)) {
+            return
+        }
+        if (loginForm.password === '') {
+            setErrorLoginForm(prev => {
+                return {
+                    ...prev,
+                    password: 'Password is empty'
+                }
+            })
+            return false
+        }
         const data = await loginUser(loginForm);
         if (data.success) {
             nav('/');
@@ -36,12 +52,53 @@ function Login() {
         const name = target.name;
         const value = target.value;
         setLoginForm((prev) => {
-            return {
+            const temp = {
                 ...prev,
                 [name]: value,
-            };
+            }
+            validateForm(temp)
+            return temp;
         });
     };
+
+    const validateForm = (data) => {
+        let isTrueEmail = true
+        if (!isEmail(data.email) || data.email === '') {
+            setErrorLoginForm(prev => {
+                return {
+                    ...prev,
+                    email: 'Email is invalid'
+                }
+            })
+            isTrueEmail = false
+            return false
+        }
+        else if (data.password === '') {
+            setErrorLoginForm(prev => {
+                return {
+                    ...prev,
+                    password: 'Password is empty'
+                }
+            })
+            isTrueEmail = true
+            if (isTrueEmail) {
+                setErrorLoginForm(prev => {
+                    return {
+                        ...prev,
+                        email: ''
+                    }
+                })
+            }
+            return false
+        }
+        isTrueEmail = true
+        setErrorLoginForm({
+            email: '',
+            password: ''
+        })
+        return true
+    }
+
     return (
         <div className={cx('wrapper')}>
             <h3 className={cx('heading')}>Wellcome back</h3>
@@ -57,7 +114,7 @@ function Login() {
                 value={loginForm.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                // error={'Loi'}
+                error={errorLoginForm.email}
             />
 
             <TextInput
@@ -70,6 +127,7 @@ function Login() {
                 value={loginForm.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
+                error={errorLoginForm.password}
             />
 
             <div className={cx('option')}>

@@ -31,7 +31,7 @@ function TextInput({
     return (
         <div className={cx('wrapper')}>
             {lable && <label>{lable}</label>}
-            <Tippy visible={!!error} placement="right" content={error}>
+            <Tippy visible={!!error} zIndex='1' placement="right" content={error}>
                 <div className={classes}>
                     {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
                     {tag === 'input' ? (

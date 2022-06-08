@@ -9,11 +9,12 @@ export const formatDate = (d) => {
     const milisecon = Date.parse(d)
     const date = new Date(milisecon)
     const mdy = date.toLocaleDateString()
+    const hmsmdy = `${date.toLocaleTimeString()}  ${date.toLocaleDateString()}`
     const day = date.getDate() + 1
     const month = monthNames[date.getMonth()]
     const year = date.getFullYear() + 1
     return {
-        mdy, day, month, year
+        hmsmdy, mdy, day, month, year
     }
 }
 

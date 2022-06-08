@@ -8,13 +8,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useContext, useState } from 'react';
-import Button from '~/components/Button';
+import { useNavigate } from 'react-router-dom';
 
+import Button from '~/components/Button';
 import ImageInput from '~/components/ImageInput';
 import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
 import * as postService from '~/services/postServices'
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '~/contexts/AuthContext';
 import { stringToUnicode } from '~/helper';
 
@@ -24,10 +24,15 @@ function Write() {
     const { authState } = useContext(AuthContext)
     const [valueForm, setValueForm] = useState({
         title: '',
-        imageCover: null,
+        imageCover: '',
         description: '',
         paragraph: [],
         status: 'true'
+    });
+    const [errorValueForm, setErrorValueForm] = useState({
+        title: '',
+        imageCover: '',
+        description: '',
     });
     const [paragraph, setParagraph] = useState([
         {
@@ -53,13 +58,19 @@ function Write() {
             return [...prev];
         });
     };
+
     const handleDeleteRow = async (key) => {
         let temp = await paragraph.filter((item, index) => index !== key);
         setParagraph([...temp]);
     };
+
     const handleAddRow = (e) => {
         e.preventDefault()
         let temp = paragraph;
+        if (paragraph.length >= 10) {
+            alert('You can only add 10 photos')
+            return
+        }
         temp.push({
             image: '',
             description: '',
@@ -81,6 +92,10 @@ function Write() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (!validate()) {
+            // alert(`${errorValueForm.imageCover}, ${errorValueForm.title}, ${errorValueForm.description}`)
+            return
+        }
         const valuePost = { ...valueForm, paragraph: [...paragraph] };
         const formData = new FormData()
         formData.append('imageCover', valuePost.imageCover)
@@ -100,6 +115,27 @@ function Write() {
             alert(response.message)
         }
     };
+
+    const validate = () => {
+        let isSubmittable = true
+        const valuesKeys = Object.keys(errorValueForm)
+        valuesKeys.forEach(key => {
+            if (valueForm[key] === "") {
+                setErrorValueForm(prev => ({
+                    ...prev,
+                    [key]: 'Required'
+                }))
+                isSubmittable = false
+            } else {
+                setErrorValueForm(prev => ({
+                    ...prev,
+                    [key]: ''
+                }))
+            }
+        })
+
+        return isSubmittable
+    }
     const renderMoreImage = () => {
         return paragraph.map((item, index) => (
             <div key={index} className={cx('mb', 'more-para')}>
@@ -114,7 +150,6 @@ function Write() {
                     value={item.image}
                     onChange={(e) => handleChangeParagrph(e, index)}
                     name="image"
-                    multiple
                 ></ImageInput>
                 <div className={cx('wrap')}>
                     <TextInput
@@ -148,6 +183,7 @@ function Write() {
                         name="imageCover"
                         value={valueForm.imageCover}
                         onChange={handleChangeForm}
+                        error={errorValueForm.imageCover}
                     ></ImageInput>
                     <TextInput
                         className={cx('mb', 'input-title')}
@@ -158,6 +194,7 @@ function Write() {
                         placeholder="Title"
                         value={valueForm.title}
                         onChange={handleChangeForm}
+                        error={errorValueForm.title}
                     />
                     <TextInput
                         className={cx('mb', 'input-title')}
@@ -168,6 +205,7 @@ function Write() {
                         placeholder="Write your story"
                         value={valueForm.description}
                         onChange={handleChangeForm}
+                        error={errorValueForm.description}
                     />
                     {renderMoreImage()}
                     <Button

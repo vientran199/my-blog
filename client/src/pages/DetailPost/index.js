@@ -42,7 +42,7 @@ function DetailPost() {
                         <h3 className={cx('title')}>{post.title}</h3>
                         <div className={cx('more-info')}>
                             <span>Written by: {post.auth.fullName}</span>
-                            <span>Created: {formatDate(post.create_at).mdy}</span>
+                            <span>Created: {formatDate(post.create_at).hmsmdy}</span>
                         </div>
                     </div>
                     <div className={cx('description')}>
