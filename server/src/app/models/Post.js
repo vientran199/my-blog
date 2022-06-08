@@ -9,18 +9,16 @@ const postSchema = new Schema(
         },
         imageCover: {
             type: String,
-            // ref: 'images',
             required: true,
         },
         description: {
             type: String,
             required: true,
         },
-        images: [
+        paragraph: [
             {
                 image: {
                     type: String,
-                    // ref: 'images',
                 },
                 description: {
                     type: String,

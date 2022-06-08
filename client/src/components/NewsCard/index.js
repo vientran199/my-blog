@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
+import { formatDate } from '~/helper';
 import styles from './NewsCard.module.scss';
 
 const cx = classNames.bind(styles);
@@ -38,8 +39,8 @@ function NewsCard({ data, className }) {
             </div>
             <figcaption>
                 <div className={cx('date')}>
-                    <span className={cx('day')}>28</span>
-                    <span className={cx('month')}>Oct</span>
+                    <span className={cx('day')}>{formatDate(data.create_at).day}</span>
+                    <span className={cx('month')}>{formatDate(data.create_at).month}</span>
                 </div>
                 <h3 className={cx('title')}>{data.title} </h3>
                 <p className={cx('description')}>

@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import styles from './DetailPost.module.scss';
 import Image from '~/components/Image';
 import * as postServices from '~/services/postServices'
+import { formatDate } from '~/helper';
 
 const cx = classNames.bind(styles);
 
@@ -41,7 +42,7 @@ function DetailPost() {
                         <h3 className={cx('title')}>{post.title}</h3>
                         <div className={cx('more-info')}>
                             <span>Written by: {post.auth.fullName}</span>
-                            <span>Created: 10/02/2021</span>
+                            <span>Created: {formatDate(post.create_at).mdy}</span>
                         </div>
                     </div>
                     <div className={cx('description')}>
@@ -49,10 +50,10 @@ function DetailPost() {
                     </div>
 
                     <div className={cx('body')}>
-                        {post.images.map(item => {
+                        {post.paragraph.map(item => {
                             return (
                                 <div className={cx('para')} key={item._id}>
-                                    <Image src={getUrlImage(item.image)} alt="anh" />
+                                    {item.image && <Image src={getUrlImage(item.image)} alt="anh" />}
                                     <div className={cx('description')}>
                                         {item.description}
                                     </div>

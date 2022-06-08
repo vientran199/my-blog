@@ -5,18 +5,43 @@ class PostController {
     //[post] /create
     async create(req, res) {
         try {
-            const { title, description, description1, status } = req.body;
-            const { imageCover, image } = req.files;
+            const { title, description, status, ...descriptions } = req.body;
+            const { imageCover, ...images } = req.files;
+
+            let paragraph = [];
+            for (let i = 0; i < 10; i++) {
+                if (
+                    images[`paragraph${i}.image`] ||
+                    descriptions[`paragraph${i}.description`]
+                ) {
+                    if (!images[`paragraph${i}.image`]) {
+                        const temp = {
+                            image: '',
+                            description:
+                                descriptions[`paragraph${i}.description`],
+                        };
+                        paragraph.push(temp);
+                    } else if (!descriptions[`paragraph${i}.description`]) {
+                        const temp = {
+                            image: images[`paragraph${i}.image`][0].path,
+                            description: '',
+                        };
+                        paragraph.push(temp);
+                    } else {
+                        const temp = {
+                            image: images[`paragraph${i}.image`][0].path,
+                            description:
+                                descriptions[`paragraph${i}.description`],
+                        };
+                        paragraph.push(temp);
+                    }
+                }
+            }
             const newPost = new Post({
                 title,
                 imageCover: imageCover[0].path,
                 description,
-                images: [
-                    {
-                        image: image[0].path,
-                        description: description1,
-                    },
-                ],
+                paragraph: paragraph,
                 status,
                 auth: req.authId,
             });

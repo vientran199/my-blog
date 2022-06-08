@@ -7,22 +7,26 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '~/components/Button';
 
 import ImageInput from '~/components/ImageInput';
 import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
 import * as postService from '~/services/postServices'
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '~/contexts/AuthContext';
+import { stringToUnicode } from '~/helper';
 
 const cx = classNames.bind(styles);
 
 function Write() {
+    const { authState } = useContext(AuthContext)
     const [valueForm, setValueForm] = useState({
         title: '',
         imageCover: null,
         description: '',
-        images: [],
+        paragraph: [],
         status: 'true'
     });
     const [paragraph, setParagraph] = useState([
@@ -31,6 +35,8 @@ function Write() {
             description: '',
         },
     ]);
+
+    const nav = useNavigate()
 
     const handleChangeParagrph = (e, index) => {
         let f = null;
@@ -75,22 +81,21 @@ function Write() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const valuePost = { ...valueForm, images: [...paragraph] };
+        const valuePost = { ...valueForm, paragraph: [...paragraph] };
         const formData = new FormData()
-
         formData.append('imageCover', valuePost.imageCover)
         formData.append('title', valuePost.title)
         formData.append('description', valuePost.description)
         formData.append('status', valuePost.status)
-        formData.append('image', valuePost.images[0].image)
-        formData.append('description1', valuePost.images[0].description)
-
+        for (let i = 0; i < valuePost.paragraph.length; i++) {
+            formData.append(`paragraph${i}.image`, valuePost.paragraph[i].image)
+            formData.append(`paragraph${i}.description`, valuePost.paragraph[i].description)
+        }
 
         const response = await postService.create(formData)
 
-        console.log(response);
         if (response.success) {
-            alert(response.message)
+            nav(`/${stringToUnicode(authState.user.fullName)}`)
         } else {
             alert(response.message)
         }
