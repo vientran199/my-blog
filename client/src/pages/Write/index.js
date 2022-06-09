@@ -7,27 +7,30 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Button from '~/components/Button';
 import ImageInput from '~/components/ImageInput';
 import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
-import * as postService from '~/services/postServices'
+import * as postService from '~/services/postServices';
 import { AuthContext } from '~/contexts/AuthContext';
 import { stringToUnicode } from '~/helper';
 
 const cx = classNames.bind(styles);
 
 function Write() {
-    const { authState } = useContext(AuthContext)
+    const { authState } = useContext(AuthContext);
+    const nav = useNavigate();
+    const postId = useLocation().pathname.split('/')[2] || '';
+
     const [valueForm, setValueForm] = useState({
         title: '',
         imageCover: '',
         description: '',
         paragraph: [],
-        status: 'true'
+        status: 'true',
     });
     const [errorValueForm, setErrorValueForm] = useState({
         title: '',
@@ -41,7 +44,19 @@ function Write() {
         },
     ]);
 
-    const nav = useNavigate()
+    useEffect(() => {
+        const fetchApi = async () => {
+            const data = await postService.getPostById(postId);
+            if (data.success) {
+                setValueForm({ ...data.post, status: data.post.status.toString() });
+            } else {
+                console.log('khong co post nay');
+            }
+        };
+        if (postId) {
+            fetchApi();
+        }
+    }, [postId]);
 
     const handleChangeParagrph = (e, index) => {
         let f = null;
@@ -65,11 +80,11 @@ function Write() {
     };
 
     const handleAddRow = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         let temp = paragraph;
         if (paragraph.length >= 10) {
-            alert('You can only add 10 photos')
-            return
+            alert('You can only add 10 photos');
+            return;
         }
         temp.push({
             image: '',
@@ -90,51 +105,63 @@ function Write() {
         });
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+    const handleSubmit = async (e, type) => {
+        e.preventDefault();
         if (!validate()) {
-            return
+            return;
         }
         const valuePost = { ...valueForm, paragraph: [...paragraph] };
-        const formData = new FormData()
-        formData.append('imageCover', valuePost.imageCover)
-        formData.append('title', valuePost.title)
-        formData.append('description', valuePost.description)
-        formData.append('status', valuePost.status)
+
+        const formData = new FormData();
+        formData.append('imageCover', valuePost.imageCover);
+        formData.append('title', valuePost.title);
+        formData.append('description', valuePost.description);
+        formData.append('status', valuePost.status);
         for (let i = 0; i < valuePost.paragraph.length; i++) {
-            formData.append(`paragraph${i}.image`, valuePost.paragraph[i].image)
-            formData.append(`paragraph${i}.description`, valuePost.paragraph[i].description)
+            formData.append(
+                `paragraph${i}.image`,
+                valuePost.paragraph[i].image,
+            );
+            formData.append(
+                `paragraph${i}.description`,
+                valuePost.paragraph[i].description,
+            );
+        }
+        let response = ''
+        if (type === 'created') {
+            response = await postService.create(formData);
+        } else if (type === 'edited') {
+            response = await postService.updatePost(postId, formData)
         }
 
-        const response = await postService.create(formData)
-
         if (response.success) {
-            nav(`/${stringToUnicode(authState.user.userName)}`)
+            alert(response.message);
+            nav(`/${stringToUnicode(authState.user.userName)}`);
         } else {
-            alert(response.message)
+            alert(response.message);
         }
     };
 
     const validate = () => {
-        let isSubmittable = true
-        const valuesKeys = Object.keys(errorValueForm)
-        valuesKeys.forEach(key => {
-            if (valueForm[key] === "") {
-                setErrorValueForm(prev => ({
+        let isSubmittable = true;
+        const valuesKeys = Object.keys(errorValueForm);
+        valuesKeys.forEach((key) => {
+            if (valueForm[key] === '') {
+                setErrorValueForm((prev) => ({
                     ...prev,
-                    [key]: 'Required'
-                }))
-                isSubmittable = false
+                    [key]: 'Required',
+                }));
+                isSubmittable = false;
             } else {
-                setErrorValueForm(prev => ({
+                setErrorValueForm((prev) => ({
                     ...prev,
-                    [key]: ''
-                }))
+                    [key]: '',
+                }));
             }
-        })
+        });
 
-        return isSubmittable
-    }
+        return isSubmittable;
+    };
     const renderMoreImage = () => {
         return paragraph.map((item, index) => (
             <div key={index} className={cx('mb', 'more-para')}>
@@ -174,7 +201,7 @@ function Write() {
                     Write a blog to save memories you remember ^^
                 </p>
             </div>
-            <form encType='multipart-form-data'>
+            <form encType="multipart-form-data">
                 <div className={cx('form-blog')}>
                     <ImageInput
                         className={cx('mb', 'image-cover')}
@@ -213,7 +240,7 @@ function Write() {
                         rounded
                         outline
                         small
-                        onClick={e => handleAddRow(e)}
+                        onClick={(e) => handleAddRow(e)}
                     >
                         Add more picture
                     </Button>
@@ -253,14 +280,35 @@ function Write() {
                             </label>
                         </div>
                     </div>
-                    <Button
-                        className={cx('publish')}
-                        primary
-                        onClick={e => handleSubmit(e)}
-                        type='submit'
-                    >
-                        Publish
-                    </Button>
+                    {postId ? (
+                        <>
+                            <Button
+                                className={cx('btn-save')}
+                                primary
+                                onClick={(e) => handleSubmit(e, 'edited')}
+                                type="submit"
+                            >
+                                Save
+                            </Button>
+                            <Button
+                                className={cx('btn-cancel')}
+                                primary
+                                onClick={(e) => { }}
+                                type="cancel"
+                            >
+                                Cancel
+                            </Button>
+                        </>
+                    ) : (
+                        <Button
+                            className={cx('btn-publish')}
+                            primary
+                            onClick={(e) => handleSubmit(e, 'created')}
+                            type="submit"
+                        >
+                            Publish
+                        </Button>
+                    )}
                 </div>
             </form>
         </div>

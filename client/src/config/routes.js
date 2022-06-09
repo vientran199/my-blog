@@ -6,6 +6,7 @@ const routes = {
     register: '/register',
     resetPasword: '/reset-password',
     write: '/write',
+    editPost: '/write/:id',
     profile: '/:username',
     saved: '/:username/saved',
     detailPost: '/post/:id',

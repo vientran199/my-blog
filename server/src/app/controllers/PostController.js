@@ -65,7 +65,7 @@ class PostController {
         }
     }
 
-    //[PUT] /post/:id   {type: 'marked/update/love/commen', data: { }}
+    //[PUT] /post/:id/updateReact   {type: 'marked/update/love/commen', data: { }}
     async updateReact(req, res) {
         try {
             const { type } = req.body;
@@ -143,6 +143,71 @@ class PostController {
         }
     }
 
+    async updatePost(req, res) {
+        const {
+            title,
+            imageCover: srcImageCOver,
+            description,
+            status,
+            ...descriptions
+        } = req.body;
+        const { imageCover, ...images } = req.files;
+        const { id: postId } = req.params;
+
+        try {
+            let paragraph = [];
+            for (let i = 0; i < 10; i++) {
+                if (
+                    images[`paragraph${i}.image`] ||
+                    descriptions[`paragraph${i}.description`]
+                ) {
+                    if (!images[`paragraph${i}.image`]) {
+                        const temp = {
+                            image: '',
+                            description:
+                                descriptions[`paragraph${i}.description`],
+                        };
+                        paragraph.push(temp);
+                    } else if (!descriptions[`paragraph${i}.description`]) {
+                        const temp = {
+                            image: images[`paragraph${i}.image`][0].path,
+                            description: '',
+                        };
+                        paragraph.push(temp);
+                    } else {
+                        const temp = {
+                            image: images[`paragraph${i}.image`][0].path,
+                            description:
+                                descriptions[`paragraph${i}.description`],
+                        };
+                        paragraph.push(temp);
+                    }
+                }
+            }
+            const post = {
+                title,
+                imageCover: srcImageCOver ? srcImageCOver : imageCover[0].path,
+                description,
+                paragraph: paragraph,
+                status,
+            };
+
+            const newPost = await Post.findByIdAndUpdate(postId, post, {
+                new: true,
+            });
+            res.json({
+                success: true,
+                message: 'Updated post successfully',
+                newPost,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: error,
+            });
+        }
+    }
     //[GET] / su dung khi da login
     async get(req, res) {
         try {

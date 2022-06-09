@@ -39,6 +39,7 @@ const publicRoutes = [
 
 const privateRoutes = [
     { path: config.routes.write, component: Write, layout: MainLayout },
+    { path: config.routes.editPost, component: Write, layout: MainLayout },
     { path: config.routes.profile, component: Profile, layout: ProfileLayout },
     { path: config.routes.saved, component: Saved, layout: ProfileLayout },
 ];

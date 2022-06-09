@@ -34,6 +34,16 @@ export const updateReact = async (type, id, data) => {
         return error.response.data;
     }
 }
+
+export const updatePost = async (id, formData) => {
+    try {
+        const response = await request.put(`post/${id}`, formData);
+        return response
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}
 export const getPostById = async (id) => {
     try {
         //filter all,public,private

@@ -84,12 +84,20 @@
     }
 }
 
-.publish{
+.btn-publish,.btn-save,.btn-cancel{
     width: 100%;
     margin-top: 20px;
     margin-left: 0px !important;
 }
 
+.btn-cancel{
+    background-color: #ed2020;
+    border-color: #ed2020;
+    &:hover{
+        background-color: #d94848;
+        border-color: #d94848;
+    }
+}
 .mb{
     margin-bottom: 30px;
 }

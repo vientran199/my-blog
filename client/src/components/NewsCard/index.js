@@ -4,6 +4,7 @@ import {
     faEarthAsia,
     faHeart,
     faLock,
+    faPen,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
@@ -14,12 +15,16 @@ import styles from './NewsCard.module.scss';
 import * as postServices from '~/services/postServices'
 import { useContext, useState } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Button from '../Button';
 
 const cx = classNames.bind(styles);
 
 function NewsCard({ data, className }) {
     const { authState } = useContext(AuthContext)
+    const nav = useNavigate()
+    const path = useLocation().pathname.split('/')[1] || ''
+
     const authId = authState.isAuthenticated ? authState.user._id : ''
     const [checked, setChecked] = useState({
         love: data.react.love.includes(authId),
@@ -30,7 +35,6 @@ function NewsCard({ data, className }) {
         marked: data.react.marked.length
     })
 
-    const nav = useNavigate()
     const getUrl = () => {
         const im = data.imageCover.slice(11).replace('\\', '/')
         const url = `http://localhost:5000/${im}`
@@ -63,6 +67,7 @@ function NewsCard({ data, className }) {
     }
     return (
         <figure className={classes}>
+            {path && <Button to={`/write/${data._id}`} className={cx('btn-edit')}><FontAwesomeIcon icon={faPen} /></Button>}
             <div className={cx('image')}>
                 <Image
                     src={getUrl()}

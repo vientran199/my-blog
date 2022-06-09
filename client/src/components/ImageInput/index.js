@@ -10,8 +10,14 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
         [className]: className,
         error,
     });
-    console.log('render');
-    const getURL = useCallback(() => URL.createObjectURL(value), [value]);
+
+    const getURL = useCallback(() => {
+        if (typeof value === 'object') {
+            return URL.createObjectURL(value);
+        } else {
+            return `http://localhost:5000/${value.slice(11).replace('\\', '/')}`
+        }
+    }, [value]);
     return (
         <div className={classes}>
             <Tippy
