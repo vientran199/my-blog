@@ -17,6 +17,7 @@ function TextInput({
     value,
     onChange,
     className,
+    readOnly = false,
     ...rest
 }) {
     const classes = cx('text-control', {
@@ -39,6 +40,7 @@ function TextInput({
                             type="text"
                             value={value}
                             onChange={onChange}
+                            readOnly={readOnly}
                             {...rest}
                         />
                     ) : (

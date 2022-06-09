@@ -17,6 +17,7 @@ function Register() {
     const { registerUser } = useContext(AuthContext);
     const [registerForm, setRegisterForm] = useState({
         fullName: '',
+        userName: '',
         email: '',
         password: '',
         verifyPassword: '',
@@ -24,6 +25,7 @@ function Register() {
     const [errorRegisterForm, setErrorRegisterForm] = useState({
         fullName: '',
         email: '',
+        userName: '',
         password: '',
         verifyPassword: '',
     });
@@ -41,7 +43,7 @@ function Register() {
         else {
             setErrorRegisterForm(prev => ({
                 ...prev,
-                email: 'Email already exists'
+                [response.type]: response.message
             }))
             alert('Register fail')
         }
@@ -81,6 +83,12 @@ function Register() {
             setErrorRegisterForm(prev => ({
                 ...prev,
                 email: ''
+            }))
+        }
+        if (registerForm.userName) {
+            setErrorRegisterForm(prev => ({
+                ...prev,
+                userName: ''
             }))
         }
         if (registerForm.fullName) {
@@ -135,6 +143,17 @@ function Register() {
                 onChange={handleChange}
                 placeholder="Enter your email"
                 error={errorRegisterForm.email}
+            />
+            <TextInput
+                rounded
+                small
+                className={cx('mb', 'input-control')}
+                leftIcon={<FontAwesomeIcon icon={faUser} />}
+                name="userName"
+                value={registerForm.userName}
+                onChange={handleChange}
+                placeholder="Enter your username"
+                error={errorRegisterForm.userName}
             />
             <TextInput
                 rounded

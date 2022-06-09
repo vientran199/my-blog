@@ -16,7 +16,7 @@ function MenuItem({ data, onClick }) {
 
     const getURL = () => {
         if (data.to && data.to.startsWith('/:')) {
-            return `/${stringToUnicode(authState.user.fullName)}`
+            return `/${stringToUnicode(authState.user.userName)}`
         }
         return data.to
     }

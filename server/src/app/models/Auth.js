@@ -7,6 +7,11 @@ const AuthSchema = new Schema(
             type: String,
             required: true,
         },
+        userName: {
+            type: String,
+            unique: true,
+            required: true,
+        },
         email: {
             type: String,
             unique: true,
@@ -15,6 +20,10 @@ const AuthSchema = new Schema(
         password: {
             type: String,
             required: true,
+        },
+        profile: {
+            type: Schema.Types.ObjectId,
+            ref: 'profile',
         },
     },
     {

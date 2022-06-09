@@ -2,12 +2,15 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 const Auth = require('../models/Auth');
+const Profile = require('../models/Profile');
 
 class AuthController {
     //[GET] / , kiểm tra user login
     async me(req, res) {
         try {
-            const author = await Auth.findById(req.authId).select('-password');
+            const author = await Auth.findById(req.authId)
+                .populate('profile')
+                .select('-password');
             if (!author) {
                 return res.status(400).json({
                     success: false,
@@ -30,20 +33,37 @@ class AuthController {
     //[post] /register
     async register(req, res) {
         try {
-            const { fullName, email, password } = req.body;
+            const { fullName, userName, email, password } = req.body;
             const author = await Auth.findOne({ email: email });
-
+            const userNameCheck = await Auth.findOne({ userName: userName });
             if (author) {
                 return res
                     .status(400)
-                    .json({ success: false, message: 'Email already taken' });
+                    .json({
+                        success: false,
+                        type: 'email',
+                        message: 'Email already taken',
+                    });
+            }
+            if (userNameCheck) {
+                return res
+                    .status(400)
+                    .json({
+                        success: false,
+                        type: 'userName',
+                        message: 'Username already taken',
+                    });
             }
             const hashedPassword = await argon2.hash(password);
+            const newProfile = new Profile();
             const newAuth = new Auth({
+                userName: userName,
                 fullName: fullName,
                 email: email,
                 password: hashedPassword,
+                profile: newProfile._id,
             });
+            await newProfile.save();
             await newAuth.save();
 
             const accessToken = jwt.sign(

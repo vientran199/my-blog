@@ -93,7 +93,6 @@ function Write() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         if (!validate()) {
-            // alert(`${errorValueForm.imageCover}, ${errorValueForm.title}, ${errorValueForm.description}`)
             return
         }
         const valuePost = { ...valueForm, paragraph: [...paragraph] };
@@ -110,7 +109,7 @@ function Write() {
         const response = await postService.create(formData)
 
         if (response.success) {
-            nav(`/${stringToUnicode(authState.user.fullName)}`)
+            nav(`/${stringToUnicode(authState.user.userName)}`)
         } else {
             alert(response.message)
         }

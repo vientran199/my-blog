@@ -1,7 +1,7 @@
 import { privateRoutes, publicRoutes } from '~/routes';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainLayout } from '~/layouts';
-import { useContext } from 'react';
+import { Fragment, useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 function App() {
     const { authState } = useContext(AuthContext);
@@ -11,7 +11,7 @@ function App() {
                 <Routes>
                     {publicRoutes.map((route, index) => {
                         const Comp = route.component;
-                        const Layout = route.layout ? route.layout : MainLayout;
+                        const Layout = route.layout ? route.layout : Fragment;
                         return (
                             <Route
                                 key={index}

@@ -1,6 +1,6 @@
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import styles from './ImageInput.module.scss';
 
 const cx = classNames.bind(styles);
@@ -10,13 +10,15 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
         [className]: className,
         error,
     });
-    const getURL = () => {
-        return URL.createObjectURL(value)
-    }
+    console.log('render');
+    const getURL = useCallback(() => URL.createObjectURL(value), [value]);
     return (
         <div className={classes}>
             <Tippy
-                visible={!!error} zIndex='1' placement="bottom" content={error}
+                visible={!!error}
+                zIndex="1"
+                placement="bottom"
+                content={error}
             >
                 <div className={cx('image-upload-wrap')}>
                     <input

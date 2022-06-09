@@ -30,7 +30,6 @@ function NewsCard({ data, className }) {
         marked: data.react.marked.length
     })
 
-    console.log(checked)
     const nav = useNavigate()
     const getUrl = () => {
         const im = data.imageCover.slice(11).replace('\\', '/')

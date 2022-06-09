@@ -3,7 +3,7 @@ import { createContext, useEffect, useReducer } from 'react';
 import { authReducer } from '~/reducers/AuthReducer';
 import * as authServices from '~/services/authServices';
 import { LOCAL_STORAGE_TOKEN_NAME } from './Constans';
-
+import * as profileServices from '~/services/profileServices'
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
@@ -70,6 +70,25 @@ const AuthContextProvider = ({ children }) => {
         }
     };
 
+    const updateInfo = async (profileForm) => {
+        try {
+            const response = await profileServices.updateInfo(profileForm);
+            if (response.success) {
+                dispatch({
+                    type: 'SET_AUTH',
+                    payload: {
+                        isAuthenticated: true, user: {
+                            ...authState.user,
+                            profile: response.newProfile
+                        }
+                    },
+                });
+                return response.success
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const logoutUser = async () => {
         localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
         dispatch({
@@ -78,7 +97,7 @@ const AuthContextProvider = ({ children }) => {
         });
     };
 
-    const authContextData = { authState, loginUser, registerUser, logoutUser };
+    const authContextData = { authState, loginUser, registerUser, updateInfo, logoutUser };
     return (
         <AuthContext.Provider value={authContextData}>
             {children}
