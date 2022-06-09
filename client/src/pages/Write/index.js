@@ -142,6 +142,13 @@ function Write() {
         }
     };
 
+    const handleCancel = (e) => {
+        e.preventDefault()
+        const isChecked = window.confirm('Are you cancel?')
+        if (isChecked) {
+            nav(`/${stringToUnicode(authState.user.userName)}`)
+        }
+    }
     const validate = () => {
         let isSubmittable = true;
         const valuesKeys = Object.keys(errorValueForm);
@@ -293,7 +300,7 @@ function Write() {
                             <Button
                                 className={cx('btn-cancel')}
                                 primary
-                                onClick={(e) => { }}
+                                onClick={(e) => handleCancel(e)}
                                 type="cancel"
                             >
                                 Cancel

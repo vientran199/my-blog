@@ -2,7 +2,7 @@ import { faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { FacebookIcon, GoogleIcon } from '~/components/Icon';
 import classNames from 'classnames/bind';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '~/contexts/AuthContext';
@@ -11,6 +11,7 @@ import Button from '~/components/Button';
 import TextInput from '~/components/TextInput';
 import styles from './Login.module.scss';
 import { isEmail } from '~/helper';
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans';
 
 const cx = classNames.bind(styles);
 
@@ -26,6 +27,12 @@ function Login() {
         password: '',
     });
 
+    useEffect(() => {
+        if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+            nav('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
     const handleLogin = async () => {
         if (!validateForm(loginForm)) {
             return

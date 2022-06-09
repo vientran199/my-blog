@@ -2,7 +2,7 @@ import { faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
 import config from '~/config';
 import Button from '~/components/Button';
@@ -10,6 +10,7 @@ import TextInput from '~/components/TextInput';
 import styles from './Register.module.scss';
 import { AuthContext } from '~/contexts/AuthContext';
 import { isEmail } from '~/helper';
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans';
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +32,13 @@ function Register() {
     });
 
     const nav = useNavigate();
+
+    useEffect(() => {
+        if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+            nav('/')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     const handleRegister = async () => {
         if (!validateFrom()) {

@@ -47,7 +47,11 @@ function NewsCard({ data, className }) {
 
     const handleClick = async (type, id) => {
         if (!authId) {
-            nav('/login')
+            const isRedirect = window.confirm('You are not logged in. Do you want to login?')
+            if (isRedirect) {
+                nav('/login')
+            }
+            return
         }
         if (data.auth === authId && type === 'marked') {
             return
@@ -58,12 +62,11 @@ function NewsCard({ data, className }) {
                 ...prev,
                 [type]: res.length
             }))
+            setChecked(prev => ({
+                ...prev,
+                [type]: !prev[type]
+            }))
         }
-
-        setChecked(prev => ({
-            ...prev,
-            [type]: !prev[type]
-        }))
     }
     return (
         <figure className={classes}>

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
@@ -12,15 +12,20 @@ const cx = classNames.bind(styles);
 function DetailPost() {
     const [post, setPost] = useState(null)
     const postId = useLocation().pathname.split('/')[2];
+    const nav = useNavigate()
 
     useEffect(() => {
         const fetchApi = async () => {
             const data = await postServices.getPostById(postId)
             if (data.success) {
                 setPost(data.post)
+            } else {
+                alert(data.message)
+                nav('/')
             }
         }
         fetchApi()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId])
 
     const getUrlImage = (url) => {
