@@ -1,8 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
+import {
+    faPen,
+    faTrash,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import NewsCard from '~/components/NewsCard';
-import { useEffect, useState } from 'react';
+import Button from '~/components/Button';
+import { useEffect, useState, memo } from 'react';
 import * as postServices from '~/services/postServices';
 
 const cx = classNames.bind(styles);
@@ -21,6 +27,15 @@ function Profile() {
         fetchApi();
     }, [filter]);
 
+    const handleDelete = async (postId) => {
+
+        const response = await postServices.deleteById(postId)
+        if (response.success) {
+            const postDelete = response.postDelete
+            setPosts(prev => (prev.filter(post => post._id !== postDelete._id)))
+        }
+    }
+
     const handleChange = (e) => {
         setFilter(prev => {
             return {
@@ -32,11 +47,27 @@ function Profile() {
 
     const render = () => {
         return posts.map((post) => (
-            <NewsCard
-                className={cx('post')}
-                key={post._id}
-                data={post}
-            ></NewsCard>
+            <div className={cx('post')} key={post._id}>
+                <div className={cx('actions')}>
+                    <Button
+                        to={`/write/${post._id}`}
+                        className={cx('btn-edit')}
+                    >
+                        <FontAwesomeIcon icon={faPen} />
+                    </Button>
+                    <Button
+                        onClick={() => handleDelete(post._id)}
+                        className={cx('btn-delete')}
+                    >
+                        <FontAwesomeIcon icon={faTrash} />
+                    </Button>
+                </div>
+                <NewsCard
+                    className={cx('detail')}
+
+                    data={post}
+                ></NewsCard>
+            </div>
         ));
     };
     return (
@@ -57,4 +88,4 @@ function Profile() {
     );
 }
 
-export default Profile;
+export default memo(Profile);

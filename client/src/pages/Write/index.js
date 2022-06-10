@@ -307,14 +307,24 @@ function Write() {
                             </Button>
                         </>
                     ) : (
-                        <Button
-                            className={cx('btn-publish')}
-                            primary
-                            onClick={(e) => handleSubmit(e, 'created')}
-                            type="submit"
-                        >
-                            Publish
-                        </Button>
+                        <>
+                            <Button
+                                className={cx('btn-publish')}
+                                primary
+                                onClick={(e) => handleSubmit(e, 'created')}
+                                type="submit"
+                            >
+                                Publish
+                            </Button>
+                            <Button
+                                className={cx('btn-cancel')}
+                                primary
+                                onClick={(e) => handleCancel(e)}
+                                type="cancel"
+                            >
+                                Cancel
+                            </Button>
+                        </>
                     )}
                 </div>
             </form>

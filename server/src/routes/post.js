@@ -10,5 +10,6 @@ router.get('/search', verifyToken, postController.get);
 router.get('/getPostSaved', verifyToken, postController.getPostSaved);
 router.put('/:id/updateReact', verifyToken, postController.updateReact);
 router.put('/:id', verifyToken, upload, postController.updatePost);
+router.delete('/:id', verifyToken, postController.deleteById);
 
 module.exports = router;

@@ -64,3 +64,13 @@ export const create = async (postForm) => {
         return error.response.data;
     }
 }
+
+export const deleteById = async (postId) => {
+    try {
+        const response = await request.deletee(`/post/${postId}`);
+        return response
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}

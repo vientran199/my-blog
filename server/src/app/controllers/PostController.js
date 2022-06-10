@@ -265,6 +265,40 @@ class PostController {
             });
         }
     }
+
+    //[DELTE] /post/:id
+    async deleteById(req, res) {
+        const { id: postId } = req.params;
+        try {
+            const postDelete = await Post.findByIdAndDelete(postId);
+            if (!postDelete) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Not found post',
+                });
+            }
+            const reactDelete = await React.findByIdAndDelete(
+                postDelete.react.toString(),
+            );
+            if (!reactDelete) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Not found post',
+                });
+            }
+            res.json({
+                success: true,
+                postDelete: postDelete,
+                message: 'Delete post successfully',
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: error,
+            });
+        }
+    }
 }
 
 module.exports = new PostController();

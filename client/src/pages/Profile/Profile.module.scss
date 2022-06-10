@@ -75,7 +75,38 @@ select:focus+.focus {
     display: flex;
     flex-wrap: wrap;
 }
+.post{
+    position: relative;
+    display: flex;
 
-.post {
+    .actions{
+        position: absolute;
+        right: 17px;
+        top: 25px;
+        left: auto;
+        z-index: 2;
+    }
+    .btn-edit,.btn-delete{
+        position: relative;
+        min-width: 30px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-left: 7px;
+        transition: all 0.3s ease;
+    }
+    .btn-edit{
+        color: var(--primary);
+    }
+    
+    .btn-delete{
+        color: red;
+    }
+    .btn-edit:hover,.btn-delete:hover{
+        transform: scale(1.2);
+    }
+}
+.detail {
     margin:15px 7px;
 }
+
