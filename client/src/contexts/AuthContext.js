@@ -10,6 +10,7 @@ const AuthContextProvider = ({ children }) => {
     const [authState, dispatch] = useReducer(authReducer, {
         user: null,
         isAuthenticated: false,
+        isLoading: true
     });
 
     const loadUser = async () => {
@@ -21,6 +22,15 @@ const AuthContextProvider = ({ children }) => {
                     payload: {
                         isAuthenticated: true,
                         user: data.author,
+                    },
+                });
+            } else {
+                localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+                dispatch({
+                    type: 'SET_AUTH',
+                    payload: {
+                        isAuthenticated: false,
+                        user: null,
                     },
                 });
             }

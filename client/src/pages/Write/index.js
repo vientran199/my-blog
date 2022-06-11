@@ -49,12 +49,28 @@ function Write() {
             const data = await postService.getPostById(postId);
             if (data.success) {
                 setValueForm({ ...data.post, status: data.post.status.toString() });
+                setParagraph(data.post.paragraph)
             } else {
                 console.log('khong co post nay');
             }
         };
         if (postId) {
             fetchApi();
+        }
+        return () => {
+            setValueForm({
+                title: '',
+                imageCover: '',
+                description: '',
+                paragraph: [],
+                status: 'true',
+            });
+            setParagraph([
+                {
+                    image: null,
+                    description: '',
+                },
+            ])
         }
     }, [postId]);
 

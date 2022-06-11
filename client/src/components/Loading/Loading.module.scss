@@ -1,0 +1,29 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    font-size: 3rem;
+    margin-top: 200px;
+    align-items: center;
+    img{
+        width: 160px;
+    }
+}
+.main{
+    display: flex;
+    align-items: center;
+    color: var(--primary);
+    margin-top: 20px;
+}
+.loading {
+    margin-left: 20px;
+    animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+    from {
+        transform:  rotate(0);
+    }
+    to {
+        transform:  rotate(360deg);
+    }
+}

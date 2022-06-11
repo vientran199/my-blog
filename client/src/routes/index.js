@@ -13,7 +13,7 @@ import Profile from '~/pages/Profile';
 import ProfileLayout from '~/layouts/ProfileLayout';
 import Saved from '~/pages/Saved';
 import DetailPost from '~/pages/DetailPost';
-import NotFound from '~/pages/NotFound';
+
 
 const publicRoutes = [
     { path: config.routes.home, component: Home, layout: MainLayout },
@@ -30,10 +30,6 @@ const publicRoutes = [
         path: config.routes.detailPost,
         component: DetailPost,
         layout: MainLayout,
-    },
-    {
-        path: '*',
-        component: NotFound,
     },
 ];
 
