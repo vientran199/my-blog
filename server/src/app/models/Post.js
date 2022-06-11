@@ -5,6 +5,7 @@ const postSchema = new Schema(
     {
         title: {
             type: String,
+            text: true,
             required: true,
         },
         imageCover: {

@@ -13,6 +13,7 @@ import Profile from '~/pages/Profile';
 import ProfileLayout from '~/layouts/ProfileLayout';
 import Saved from '~/pages/Saved';
 import DetailPost from '~/pages/DetailPost';
+import Search from '~/pages/Search';
 
 
 const publicRoutes = [
@@ -31,6 +32,11 @@ const publicRoutes = [
         component: DetailPost,
         layout: MainLayout,
     },
+    {
+        path: config.routes.search,
+        component: Search,
+        layout: MainLayout,
+    }
 ];
 
 const privateRoutes = [

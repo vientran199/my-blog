@@ -7,8 +7,9 @@ const routes = {
     resetPasword: '/reset-password',
     write: '/write',
     editPost: '/write/:id',
-    profile: '/:username',
-    saved: '/:username/saved',
+    profile: '/me',
+    saved: '/me/saved',
     detailPost: '/post/:id',
+    search: '/search'
 };
 export default routes;

@@ -2,23 +2,26 @@ import classNames from 'classnames/bind';
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 import styles from './Search.module.scss';
 import { SearchIcon } from '~/components/Icon';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Search() {
     const [searchText, setSearchText] = useState('');
     // const [searchResult, setSearchResult] = useState([]);
-    const [loading, setLoading] = useState(false);
-
+    // const [loading, setLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const inputRef = useRef();
 
     const handleChange = (e) => {
         setSearchText(e.target.value);
     };
+
+
     return (
         <div className={cx('wrapper')}>
             <input
@@ -29,7 +32,7 @@ function Search() {
                 placeholder="Type to search"
             />
 
-            {!!searchText && !loading && (
+            {!!searchText && !false && (
                 <button
                     className={cx('search-clear')}
                     onClick={(e) => {
@@ -42,17 +45,33 @@ function Search() {
                 </button>
             )}
 
-            {loading && (
+            {false && (
                 <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
             )}
-            <button
-                className={cx('action-btn')}
-                onClick={() => inputRef.current.focus()}
-            >
-                <SearchIcon className={cx('icon')} />
-            </button>
+            {!isOpen ? (
+                <button
+                    className={cx('action-btn')}
+                    onClick={() => {
+                        inputRef.current.focus();
+                        setIsOpen(true);
+                    }}
+                >
+                    <SearchIcon className={cx('icon')} />
+                </button>
+            ) : (
+                <Link
+                    className={cx('action-btn')}
+                    to={`/search?q=${searchText}`}
+                    onClick={() => {
+                        setIsOpen(false);
+                        setSearchText('');
+                    }}
+                >
+                    <SearchIcon className={cx('icon')} />
+                </Link>
+            )}
         </div>
     );
 }
 
-export default Search;
+export default memo(Search);

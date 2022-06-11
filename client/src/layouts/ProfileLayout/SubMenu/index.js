@@ -5,20 +5,16 @@ import { faBook, faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { useLocation } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import { useContext } from 'react';
-import { AuthContext } from '~/contexts/AuthContext';
-import { stringToUnicode } from '~/helper';
+import config from '~/config';
 const cx = classNames.bind(styles);
 
 function SubMenu({ menus }) {
-    const { authState } = useContext(AuthContext)
     const currentPath = useLocation().pathname.split('/')[2] || '';
-    const slug = stringToUnicode(authState.user.fullName)
 
     return (
         <div className={cx('menu')}>
             <Button
-                to={`/${slug}`}
+                to={config.routes.profile}
                 className={cx(
                     'menu-item',
                     `${currentPath}` === '' ? 'active' : '',
@@ -28,7 +24,7 @@ function SubMenu({ menus }) {
                 Posts
             </Button>
             <Button
-                to={`/${slug}/saved`}
+                to={config.routes.saved}
                 className={cx(
                     'menu-item',
                     `${currentPath}` === 'saved' ? 'active' : '',

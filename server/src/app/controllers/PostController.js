@@ -208,7 +208,7 @@ class PostController {
             });
         }
     }
-    //[GET] / su dung khi da login
+    //[GET] /post/filter?status=
     async get(req, res) {
         try {
             // filter: all,public,private
@@ -247,6 +247,25 @@ class PostController {
         }
     }
 
+    //[GET] /post/search?q=
+    async search(req, res) {
+        const { q } = req.query;
+        try {
+            const posts = await Post.find({ $text: { $search: q } }).populate(
+                'react',
+            );
+            res.json({
+                success: true,
+                posts,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                success: false,
+                message: error,
+            });
+        }
+    }
     //[GET] /getPostSaved
     async getPostSaved(req, res) {
         try {

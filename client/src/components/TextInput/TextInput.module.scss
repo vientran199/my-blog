@@ -31,6 +31,18 @@
 }
 
 //rounded
+.primary{
+    color: var(--primary);
+
+    border: 1px solid transparent;
+    border-color: #d5bfdd;
+}
+.primary:focus-within{
+    border-color: var(--primary);
+    >.icon{
+        color: currentColor;
+    }
+}
 .rounded{
     color: var(--primary);
     border-radius: 999px;

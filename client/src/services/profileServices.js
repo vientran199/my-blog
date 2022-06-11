@@ -9,3 +9,13 @@ export const updateInfo = async (profileForm) => {
         return error.response.data;
     }
 }
+
+export const getProfileByUsername = async (username) => {
+    try {
+        const response = await request.get(`profile/${username}`);
+        return response
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}

@@ -16,6 +16,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2Mjk5Y
 
 ###
 
+GET http://localhost:5000/api/profile/vientran
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRoSWQiOiI2MmEwZGFmZTU2YWNmOGQ2YmY3MDE2YzYiLCJpYXQiOjE2NTQ5MzU3Njh9.9vk96SBOOhsTb08WU9HD2pPTrMTjGsWT_poOeVN9Zx4
+
+###
+
 
 POST http://localhost:5000/api/auth/login
 Content-Type: application/json

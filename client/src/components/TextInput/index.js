@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 function TextInput({
     lable,
     tag = 'input',
+    primary = false,
     line = false,
     rounded = false,
     small = false,
@@ -25,6 +26,7 @@ function TextInput({
         [className]: className,
         small,
         lagre,
+        primary,
         line,
         rounded,
         error,
@@ -61,6 +63,7 @@ function TextInput({
 TextInput.propTypes = {
     lable: PropTypes.string,
     tag: PropTypes.string,
+    primary: PropTypes.bool,
     line: PropTypes.bool,
     rounded: PropTypes.bool,
     small: PropTypes.bool,

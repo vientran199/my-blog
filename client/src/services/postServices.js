@@ -3,7 +3,7 @@ import * as request from '~/utils/httpRequest'
 export const getPost = async (filter) => {
     try {
         //filter all,public,private
-        const response = await request.get(`post/search?status=${filter.status}`);
+        const response = await request.get(`post/filter?status=${filter.status}`);
         return response
     } catch (error) {
         console.log(error);
@@ -68,6 +68,16 @@ export const create = async (postForm) => {
 export const deleteById = async (postId) => {
     try {
         const response = await request.deletee(`/post/${postId}`);
+        return response
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+}
+
+export const search = async (query) => {
+    try {
+        const response = await request.get(`/post/search?q=${query}`);
         return response
     } catch (error) {
         console.log(error);
