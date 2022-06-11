@@ -12,17 +12,26 @@ const cx = classNames.bind(styles);
 function Search() {
     const [searchResult, setSearchResult] = useState([]);
     const [searchText, setSearchText] = useState('');
+    const [errorSearchText, setErrorSearchText] = useState('');
     const location = useLocation();
 
     useEffect(() => {
         if (location.search) {
             const text = location.search.split('=')[1] || '';
-            setSearchText(text);
-            handleSearch(text)
+            const textDecode = decodeURIComponent(text)
+            setSearchText(textDecode);
+            handleSearch(textDecode)
         }
     }, [location]);
 
     const handleSearch = async (text) => {
+        if (!text) {
+            setErrorSearchText('Required')
+            setSearchResult([])
+            return
+        } else {
+            setErrorSearchText('')
+        }
         try {
             const data = await postServices.search(text)
             setSearchResult(data.posts)
@@ -37,7 +46,7 @@ function Search() {
                 <Button className={cx('btn-search')} primary small onClick={() => handleSearch(searchText)}>
                     Search
                 </Button>
-                <TextInput className={cx('text-control')} primary small value={searchText} onChange={e => setSearchText(e.target.value)} />
+                <TextInput className={cx('text-control')} primary small value={searchText} onChange={e => setSearchText(e.target.value)} error={errorSearchText} />
             </div>
             <div className={cx('search-result')}>
                 {searchResult.length === 0 ? <div className={cx('no-result')}><h3>Không tìm thấy kết quả</h3>

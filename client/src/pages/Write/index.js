@@ -16,7 +16,6 @@ import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
 import * as postService from '~/services/postServices';
 import { AuthContext } from '~/contexts/AuthContext';
-import { stringToUnicode } from '~/helper';
 
 const cx = classNames.bind(styles);
 
@@ -49,6 +48,11 @@ function Write() {
             const data = await postService.getPostById(postId);
             if (data.success) {
                 setValueForm({ ...data.post, status: data.post.status.toString() });
+                if (authState.user._id !== data.post.auth._id) {
+                    alert('You not allow edit')
+                    nav('/me')
+                    return
+                }
                 setParagraph(data.post.paragraph)
             } else {
                 console.log('khong co post nay');
@@ -72,6 +76,7 @@ function Write() {
                 },
             ])
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId]);
 
     const handleChangeParagrph = (e, index) => {
@@ -152,7 +157,7 @@ function Write() {
 
         if (response.success) {
             alert(response.message);
-            nav(`/${stringToUnicode(authState.user.userName)}`);
+            nav(`/me`);
         } else {
             alert(response.message);
         }
@@ -162,7 +167,7 @@ function Write() {
         e.preventDefault()
         const isChecked = window.confirm('Are you cancel?')
         if (isChecked) {
-            nav(`/${stringToUnicode(authState.user.userName)}`)
+            nav(`/me`)
         }
     }
     const validate = () => {

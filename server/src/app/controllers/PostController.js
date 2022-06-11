@@ -153,7 +153,14 @@ class PostController {
         } = req.body;
         const { imageCover, ...images } = req.files;
         const { id: postId } = req.params;
+        const post = await Post.findById(postId);
 
+        if (!post || req.authId !== post.auth._id.toString()) {
+            return res.status(405).json({
+                success: false,
+                message: 'User not allow',
+            });
+        }
         try {
             let paragraph = [];
             for (let i = 0; i < 10; i++) {
@@ -184,7 +191,7 @@ class PostController {
                     }
                 }
             }
-            const post = {
+            const newPost = {
                 title,
                 imageCover: srcImageCOver ? srcImageCOver : imageCover[0].path,
                 description,
@@ -192,13 +199,13 @@ class PostController {
                 status,
             };
 
-            const newPost = await Post.findByIdAndUpdate(postId, post, {
+            const newPost1 = await Post.findByIdAndUpdate(postId, newPost, {
                 new: true,
             });
             res.json({
                 success: true,
                 message: 'Updated post successfully',
-                newPost,
+                newPost: newPost1,
             });
         } catch (error) {
             console.log(error);
