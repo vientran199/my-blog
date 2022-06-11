@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import classNames from 'classnames/bind';
@@ -57,4 +58,18 @@ function TextInput({
     );
 }
 
+TextInput.propTypes = {
+    lable: PropTypes.string,
+    tag: PropTypes.string,
+    line: PropTypes.bool,
+    rounded: PropTypes.bool,
+    small: PropTypes.bool,
+    lagre: PropTypes.bool,
+    leftIcon: PropTypes.node,
+    error: PropTypes.string,
+    value: PropTypes.string,
+    onChange: PropTypes.func,
+    className: PropTypes.string,
+    readOnly: PropTypes.bool,
+}
 export default TextInput;

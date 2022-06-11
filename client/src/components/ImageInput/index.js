@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
 import { memo, useCallback } from 'react';
@@ -57,4 +58,12 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
     );
 }
 
+ImageInput.propTypes = {
+    title: PropTypes.string,
+    value: PropTypes.any,
+    error: PropTypes.string,
+    onChange: PropTypes.func,
+    className: PropTypes.string,
+
+}
 export default memo(ImageInput);

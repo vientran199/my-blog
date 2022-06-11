@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
     faBookmark,
     faComment,
@@ -123,4 +124,8 @@ function NewsCard({ data, className }) {
     );
 }
 
+NewsCard.propTypes = {
+    data: PropTypes.object.isRequired,
+    className: PropTypes.string
+}
 export default NewsCard;

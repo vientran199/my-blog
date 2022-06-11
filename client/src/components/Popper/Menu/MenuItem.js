@@ -28,7 +28,8 @@ function MenuItem({ data, onClick }) {
     );
 }
 MenuItem.propTypes = {
-    data: PropTypes.object
+    data: PropTypes.object,
+    onClick: PropTypes.func
 }
 
 export default MenuItem;
