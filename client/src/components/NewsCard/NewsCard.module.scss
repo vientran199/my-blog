@@ -7,12 +7,12 @@
     min-height: 370px;
     max-height: 400px;
     width: 100%;
-    background-color: #F6F6F6;
+    background-color: #f6f6f6;
     color: var(--text-color);
     text-align: left;
     font-size: 1.6rem;
     border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.30);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 
     * {
         -webkit-box-sizing: border-box;
@@ -20,14 +20,15 @@
         -webkit-transition: all 0.3s ease;
         transition: all 0.3s ease;
     }
-    .actions{
+    .actions {
         position: absolute;
         right: 10px;
         top: 10px;
         left: auto;
         z-index: 2;
     }
-    .btn-edit,.btn-delete{
+    .btn-edit,
+    .btn-delete {
         position: relative;
         min-width: 30px;
         width: 35px;
@@ -35,14 +36,15 @@
         border-radius: 50%;
         margin-left: 7px;
     }
-    .btn-edit{
+    .btn-edit {
         color: var(--primary);
     }
-    
-    .btn-delete{
+
+    .btn-delete {
         color: red;
     }
-    .btn-edit:hover,.btn-delete:hover{
+    .btn-edit:hover,
+    .btn-delete:hover {
         transform: scale(1.2);
     }
     .image {
@@ -81,7 +83,6 @@
         font-weight: 700;
         text-transform: uppercase;
     }
-    
 }
 
 .card .date span {
@@ -130,33 +131,32 @@
     width: 100%;
 }
 
-.status{
+.status {
     display: flex;
     align-items: center;
-    span{
-    margin-right: 5px;   
+    span {
+        margin-right: 5px;
     }
-    svg{
+    svg {
         cursor: pointer;
     }
-    svg:hover{
+    svg:hover {
         transform: scale(1.1);
     }
 }
-.react{
+.react {
     display: flex;
-    div{
+    div {
         margin-left: 15px;
         cursor: pointer;
-        &:hover{
+        &:hover {
             transform: scale(1.1);
         }
     }
-    span{
+    span {
         margin-left: 5px;
     }
 }
-
 
 .card a {
     left: 0;
@@ -171,10 +171,88 @@
     transform: scale(1.15);
 }
 
-.loved{
+.loved {
     color: #c30a0a;
 }
 
-.marked{
+.marked {
     color: #02118e;
 }
+
+.Skeleton {
+    min-width: 285px;
+    .image {
+        background: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 70%
+            )
+            #f8e6ff;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1s skeleton ease-in-out infinite;
+    }
+    .date {
+        background: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 70%
+            )
+            #8086e5;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1s skeleton ease-in-out infinite;
+    }
+    .title {
+        min-height: 50px;
+        margin-bottom: 10px;
+        margin-left: 60px;
+        display: inline-block;
+        width: 75%;
+        background: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 70%
+            )
+            #f8e6ff;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1s skeleton ease-in-out infinite;
+    }
+    .description {
+        height: 20px;
+        background: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 70%
+            )
+            #f6deff;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1s skeleton ease-in-out infinite;
+    }
+    footer {
+        height: 30px;
+        background: linear-gradient(
+                100deg,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(255, 255, 255, 0) 70%
+            )
+            #8086e5;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1s skeleton ease-in-out infinite;
+    }
+}
+
+@keyframes skeleton {
+    to {
+        background-position-x: -20%;
+    }
+}
+

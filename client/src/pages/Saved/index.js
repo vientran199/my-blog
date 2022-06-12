@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Saved.module.scss';
 
 import NewsCard from '~/components/NewsCard';
+import NewsCardSkeleton from '~/components/NewsCard/NewsCardSkeleton';
 import Button from '~/components/Button';
 import { useEffect, useState } from 'react';
 import * as postServices from '~/services/postServices';
@@ -10,9 +11,11 @@ const cx = classNames.bind(styles);
 
 function Saved() {
     const [posts, setPosts] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchApi = async () => {
+            setIsLoading(true);
             const { posts } = await postServices.getPostSaved();
 
             setPosts(
@@ -25,12 +28,18 @@ function Saved() {
                     },
                 })),
             );
+            setIsLoading(false);
         };
         fetchApi();
     }, []);
 
     const render = () => {
-        if (posts.length === 0) {
+        if (isLoading) {
+            return [...Array(6)].map((_, index) => (
+                <NewsCardSkeleton className={cx('post')} key={index} />
+            ));
+        }
+        if (!isLoading && posts.length === 0) {
             return (
                 <div className={cx('no-content')}>
                     <p>

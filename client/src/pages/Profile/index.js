@@ -4,6 +4,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import NewsCard from '~/components/NewsCard';
+import NewsCardSkeleton from '~/components/NewsCard/NewsCardSkeleton';
 import Button from '~/components/Button';
 import { useEffect, useState, memo } from 'react';
 import * as postServices from '~/services/postServices';
@@ -18,11 +19,14 @@ function Profile() {
     const [posts, setPosts] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [postSelected, setPostSelected] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchApi = async () => {
+            setIsLoading(true);
             const response = await postServices.getPost(filter);
             setPosts(response.posts);
+            setIsLoading(false);
         };
         fetchApi();
     }, [filter]);
@@ -48,12 +52,22 @@ function Profile() {
     };
 
     const render = () => {
-        if (posts.length === 0) {
+        if (isLoading) {
+            return [...Array(6)].map((_, index) => (
+                <div className={cx('post')} key={index}>
+                    <NewsCardSkeleton className={cx('detail')} />
+                </div>
+            ));
+        }
+        if (!isLoading && posts.length === 0) {
             return (
                 <div className={cx('no-content')}>
                     <p>
                         You don't have any posts yet. <br></br>You can write
-                        posts here <Button to={'/write'} text>Create a post</Button>
+                        posts here{' '}
+                        <Button to={'/write'} text>
+                            Create a post
+                        </Button>
                     </p>
                 </div>
             );
