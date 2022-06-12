@@ -58,7 +58,7 @@ function Profile() {
                 </div>
             );
         } else
-            posts.map((post) => (
+            return posts.map((post) => (
                 <div className={cx('post')} key={post._id}>
                     <div className={cx('actions')}>
                         <Button

@@ -43,7 +43,7 @@ function Saved() {
                 </div>
             );
         } else
-            posts.map((post) => (
+            return posts.map((post) => (
                 <NewsCard
                     className={cx('post')}
                     key={post._id}
