@@ -11,10 +11,10 @@ import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faArrowRightFromBracket,
-    faPlus,
     faEarthAsia,
     faUser,
     faGear,
+    faPenToSquare,
 } from '@fortawesome/free-solid-svg-icons';
 import Search from '../Search';
 import NavMenus from './NavMenus';
@@ -138,7 +138,7 @@ function Header() {
                                 to={config.routes.write}
                                 outline
                                 className={cx('add-btn')}
-                                leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                                leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
                             >
                                 Viết bài
                             </Button>
