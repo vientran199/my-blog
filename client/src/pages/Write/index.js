@@ -16,6 +16,7 @@ import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
 import * as postService from '~/services/postServices';
 import { AuthContext } from '~/contexts/AuthContext';
+import ConfirmModal from '~/components/ConfirmModal';
 
 const cx = classNames.bind(styles);
 
@@ -23,7 +24,7 @@ function Write() {
     const { authState } = useContext(AuthContext);
     const nav = useNavigate();
     const postId = useLocation().pathname.split('/')[2] || '';
-
+    const [isOpen, setIsOpen] = useState(false)
     const [valueForm, setValueForm] = useState({
         title: '',
         imageCover: '',
@@ -47,13 +48,16 @@ function Write() {
         const fetchApi = async () => {
             const data = await postService.getPostById(postId);
             if (data.success) {
-                setValueForm({ ...data.post, status: data.post.status.toString() });
+                setValueForm({
+                    ...data.post,
+                    status: data.post.status.toString(),
+                });
                 if (authState.user._id !== data.post.auth._id) {
-                    alert('You not allow edit')
-                    nav('/me')
-                    return
+                    alert('You not allow edit');
+                    nav('/me');
+                    return;
                 }
-                setParagraph(data.post.paragraph)
+                setParagraph(data.post.paragraph);
             } else {
                 console.log('khong co post nay');
             }
@@ -74,8 +78,8 @@ function Write() {
                     image: null,
                     description: '',
                 },
-            ])
-        }
+            ]);
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId]);
 
@@ -148,11 +152,11 @@ function Write() {
                 valuePost.paragraph[i].description,
             );
         }
-        let response = ''
+        let response = '';
         if (type === 'created') {
             response = await postService.create(formData);
         } else if (type === 'edited') {
-            response = await postService.updatePost(postId, formData)
+            response = await postService.updatePost(postId, formData);
         }
 
         if (response.success) {
@@ -164,12 +168,9 @@ function Write() {
     };
 
     const handleCancel = (e) => {
-        e.preventDefault()
-        const isChecked = window.confirm('Are you cancel?')
-        if (isChecked) {
-            nav(`/me`)
-        }
-    }
+        e.preventDefault();
+        setIsOpen(true)
+    };
     const validate = () => {
         let isSubmittable = true;
         const valuesKeys = Object.keys(errorValueForm);
@@ -222,134 +223,145 @@ function Write() {
         ));
     };
     return (
-        <div className={cx('content')}>
-            <div className={cx('heading')}>
-                <h3 className={cx('heading-title')}>Write blog</h3>
-                <p className={cx('description')}>
-                    Write a blog to save memories you remember ^^
-                </p>
-            </div>
-            <form encType="multipart-form-data">
-                <div className={cx('form-blog')}>
-                    <ImageInput
-                        className={cx('mb', 'image-cover')}
-                        title={'Drop image cover'}
-                        name="imageCover"
-                        value={valueForm.imageCover}
-                        onChange={handleChangeForm}
-                        error={errorValueForm.imageCover}
-                    ></ImageInput>
-                    <TextInput
-                        className={cx('mb', 'input-title')}
-                        leftIcon={<FontAwesomeIcon icon={faCirclePlus} />}
-                        line
-                        small
-                        name="title"
-                        placeholder="Title"
-                        value={valueForm.title}
-                        onChange={handleChangeForm}
-                        error={errorValueForm.title}
-                    />
-                    <TextInput
-                        className={cx('mb', 'input-title')}
-                        tag="textarea"
-                        line
-                        small
-                        name="description"
-                        placeholder="Write your story"
-                        value={valueForm.description}
-                        onChange={handleChangeForm}
-                        error={errorValueForm.description}
-                    />
-                    {renderMoreImage()}
-                    <Button
-                        className={cx('mb', 'btn-add-more')}
-                        leftIcon={<FontAwesomeIcon icon={faPlus} />}
-                        rounded
-                        outline
-                        small
-                        onClick={(e) => handleAddRow(e)}
-                    >
-                        Add more picture
-                    </Button>
-
-                    <div className={cx('status')}>
-                        <div>Who can see?</div>
-                        <div className={cx('group-radio')}>
-                            <label className={cx('option')}>
-                                <input
-                                    type="radio"
-                                    name="status"
-                                    value={true}
-                                    checked={valueForm.status === 'true'}
-                                    onChange={handleChangeForm}
-                                />
-                                <FontAwesomeIcon
-                                    className={cx('icon')}
-                                    icon={faUnlock}
-                                />
-                                <span>
-                                    Anyone on the internet can see this post
-                                </span>
-                            </label>
-                            <label className={cx('option')}>
-                                <input
-                                    type="radio"
-                                    name="status"
-                                    value={false}
-                                    checked={valueForm.status === 'false'}
-                                    onChange={handleChangeForm}
-                                />
-                                <FontAwesomeIcon
-                                    className={cx('icon')}
-                                    icon={faLock}
-                                />
-                                <span>Only you can see this post</span>
-                            </label>
-                        </div>
-                    </div>
-                    {postId ? (
-                        <>
-                            <Button
-                                className={cx('btn-save')}
-                                primary
-                                onClick={(e) => handleSubmit(e, 'edited')}
-                                type="submit"
-                            >
-                                Save
-                            </Button>
-                            <Button
-                                className={cx('btn-cancel')}
-                                primary
-                                onClick={(e) => handleCancel(e)}
-                                type="cancel"
-                            >
-                                Cancel
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <Button
-                                className={cx('btn-publish')}
-                                primary
-                                onClick={(e) => handleSubmit(e, 'created')}
-                                type="submit"
-                            >
-                                Publish
-                            </Button>
-                            <Button
-                                className={cx('btn-cancel')}
-                                primary
-                                onClick={(e) => handleCancel(e)}
-                                type="cancel"
-                            >
-                                Cancel
-                            </Button>
-                        </>
-                    )}
+        <>
+            <div className={cx('content')}>
+                <div className={cx('heading')}>
+                    <h3 className={cx('heading-title')}>Write blog</h3>
+                    <p className={cx('description')}>
+                        Write a blog to save memories you remember ^^
+                    </p>
                 </div>
-            </form>
-        </div>
+                <form encType="multipart-form-data">
+                    <div className={cx('form-blog')}>
+                        <ImageInput
+                            className={cx('mb', 'image-cover')}
+                            title={'Drop image cover'}
+                            name="imageCover"
+                            value={valueForm.imageCover}
+                            onChange={handleChangeForm}
+                            error={errorValueForm.imageCover}
+                        ></ImageInput>
+                        <TextInput
+                            className={cx('mb', 'input-title')}
+                            leftIcon={<FontAwesomeIcon icon={faCirclePlus} />}
+                            line
+                            small
+                            name="title"
+                            placeholder="Title"
+                            value={valueForm.title}
+                            onChange={handleChangeForm}
+                            error={errorValueForm.title}
+                        />
+                        <TextInput
+                            className={cx('mb', 'input-title')}
+                            tag="textarea"
+                            line
+                            small
+                            name="description"
+                            placeholder="Write your story"
+                            value={valueForm.description}
+                            onChange={handleChangeForm}
+                            error={errorValueForm.description}
+                        />
+                        {renderMoreImage()}
+                        <Button
+                            className={cx('mb', 'btn-add-more')}
+                            leftIcon={<FontAwesomeIcon icon={faPlus} />}
+                            rounded
+                            outline
+                            small
+                            onClick={(e) => handleAddRow(e)}
+                        >
+                            Add more picture
+                        </Button>
+
+                        <div className={cx('status')}>
+                            <div>Who can see?</div>
+                            <div className={cx('group-radio')}>
+                                <label className={cx('option')}>
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        value={true}
+                                        checked={valueForm.status === 'true'}
+                                        onChange={handleChangeForm}
+                                    />
+                                    <FontAwesomeIcon
+                                        className={cx('icon')}
+                                        icon={faUnlock}
+                                    />
+                                    <span>
+                                        Anyone on the internet can see this post
+                                    </span>
+                                </label>
+                                <label className={cx('option')}>
+                                    <input
+                                        type="radio"
+                                        name="status"
+                                        value={false}
+                                        checked={valueForm.status === 'false'}
+                                        onChange={handleChangeForm}
+                                    />
+                                    <FontAwesomeIcon
+                                        className={cx('icon')}
+                                        icon={faLock}
+                                    />
+                                    <span>Only you can see this post</span>
+                                </label>
+                            </div>
+                        </div>
+                        {postId ? (
+                            <>
+                                <Button
+                                    className={cx('btn-save')}
+                                    primary
+                                    onClick={(e) => handleSubmit(e, 'edited')}
+                                    type="submit"
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    className={cx('btn-cancel')}
+                                    primary
+                                    onClick={(e) => handleCancel(e)}
+                                    type="cancel"
+                                >
+                                    Cancel
+                                </Button>
+                            </>
+                        ) : (
+                            <>
+                                <Button
+                                    className={cx('btn-publish')}
+                                    primary
+                                    onClick={(e) => handleSubmit(e, 'created')}
+                                    type="submit"
+                                >
+                                    Publish
+                                </Button>
+                                <Button
+                                    className={cx('btn-cancel')}
+                                    primary
+                                    onClick={(e) => handleCancel(e)}
+                                    type="cancel"
+                                >
+                                    Cancel
+                                </Button>
+                            </>
+                        )}
+                    </div>
+                </form>
+            </div>
+            <ConfirmModal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onConfirm={() => { nav('/me') }}
+                title="Confirm cancel"
+                description="Changes you made may not be saved. Are you sure cancel?"
+                cancelText='No'
+                confirmText='Yes'
+            ></ConfirmModal>
+        </>
     );
 }
 

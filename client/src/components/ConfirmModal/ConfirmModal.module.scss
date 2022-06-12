@@ -1,0 +1,48 @@
+.wrapper{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: white;
+    width: 500px;
+    min-height: 200px;
+    margin: 30px auto;
+    border-radius: 10px;
+    .title{
+        font-size: 2.4rem;
+        color: var(--text-color);
+        padding: 10px;
+        border-bottom: 1px solid rgba(0,0,0,0.2);
+    }
+    .description{
+        padding: 10px;
+        margin-bottom: auto;
+    }
+    .actions{
+        border-top: 1px solid rgba(0,0,0,0.2);
+        padding: 10px;
+        text-align: right;
+    }
+    .btn-cancel{
+        background-color: #706161;
+        border-color: #706161;
+    }
+    .btn-cancel:hover{
+        background-color: #8e7f7f;
+        border-color: #8e7f7f;
+    }
+}
+
+.isOpen{
+    display: block;
+}

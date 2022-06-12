@@ -79,3 +79,10 @@ select:focus+.focus {
 .post {
     margin: 7px;
 }
+.no-content{
+    margin:20px auto;
+    text-align: center;
+    a{
+        padding: 0px;
+    }
+}
