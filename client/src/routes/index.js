@@ -3,7 +3,7 @@ import config from '~/config';
 import Home from '~/pages/Home';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
-import ResetPassword from '~/pages/ResetPassword';
+import ChangePassword from '~/pages/ChangePassword';
 
 import MainLayout, { AuthLayout } from '~/layouts';
 import AboutUs from '~/pages/AboutUs';
@@ -15,7 +15,6 @@ import Saved from '~/pages/Saved';
 import DetailPost from '~/pages/DetailPost';
 import Search from '~/pages/Search';
 
-
 const publicRoutes = [
     { path: config.routes.home, component: Home, layout: MainLayout },
     { path: config.routes.aboutUs, component: AboutUs, layout: MainLayout },
@@ -23,8 +22,8 @@ const publicRoutes = [
     { path: config.routes.login, component: Login, layout: AuthLayout },
     { path: config.routes.register, component: Register, layout: AuthLayout },
     {
-        path: config.routes.resetPasword,
-        component: ResetPassword,
+        path: config.routes.changePasword,
+        component: ChangePassword,
         layout: AuthLayout,
     },
     {
@@ -36,7 +35,7 @@ const publicRoutes = [
         path: config.routes.search,
         component: Search,
         layout: MainLayout,
-    }
+    },
 ];
 
 const privateRoutes = [

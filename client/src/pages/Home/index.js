@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import images from '~/assets/images';
 import NewsCard from '~/components/NewsCard';
@@ -9,10 +9,12 @@ import Button from '~/components/Button';
 import ConfirmModal from '~/components/ConfirmModal';
 import * as siteServices from '~/services/siteServices';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '~/contexts/AuthContext';
 
 const cx = classNames.bind(styles);
 
 function Home() {
+    const { authState } = useContext(AuthContext);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +28,7 @@ function Home() {
             setIsLoading(false);
         };
         fetchApi();
-    }, []);
+    }, [authState]);
 
     const handleConfirm = () => {
         nav('/login');

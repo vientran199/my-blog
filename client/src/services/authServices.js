@@ -28,3 +28,13 @@ export const register = async (userForm) => {
         return error.response.data;
     }
 };
+
+export const changePassword = async (formData) => {
+    try {
+        const response = await request.patch('auth/changePassword', formData);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return error.response.data;
+    }
+};

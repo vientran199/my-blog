@@ -37,22 +37,18 @@ class AuthController {
             const author = await Auth.findOne({ email: email });
             const userNameCheck = await Auth.findOne({ userName: userName });
             if (author) {
-                return res
-                    .status(400)
-                    .json({
-                        success: false,
-                        type: 'email',
-                        message: 'Email already taken',
-                    });
+                return res.status(400).json({
+                    success: false,
+                    type: 'email',
+                    message: 'Email already taken',
+                });
             }
             if (userNameCheck) {
-                return res
-                    .status(400)
-                    .json({
-                        success: false,
-                        type: 'userName',
-                        message: 'Username already taken',
-                    });
+                return res.status(400).json({
+                    success: false,
+                    type: 'userName',
+                    message: 'Username already taken',
+                });
             }
             const hashedPassword = await argon2.hash(password);
             const newProfile = new Profile();
@@ -118,6 +114,50 @@ class AuthController {
                 success: true,
                 message: 'Login successfull',
                 accessToken: accessToken,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                sucess: false,
+                message: 'Internal server error',
+            });
+        }
+    }
+
+    //[PATCH] /api/auth/changePassword
+    async changePassword(req, res) {
+        const { email, oldPassword, newPassword } = req.body;
+        try {
+            const auth = await Auth.findOne({ email: email });
+            if (!auth) {
+                return res.status(401).json({
+                    success: false,
+                    message: 'Email does not exist',
+                });
+            }
+            const passwordValid = await argon2.verify(
+                auth.password,
+                oldPassword,
+            );
+            if (!passwordValid) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Incorrect password',
+                });
+            }
+            const hashedPassword = await argon2.hash(newPassword);
+
+            let updatedAuth = {
+                password: hashedPassword,
+            };
+            updatedAuth = await Auth.findOneAndUpdate(
+                { _id: auth._id },
+                updatedAuth,
+                { new: true },
+            );
+            res.json({
+                success: true,
+                message: 'Change password successfull!',
             });
         } catch (error) {
             console.log(error);

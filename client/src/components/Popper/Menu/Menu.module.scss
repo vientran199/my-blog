@@ -10,6 +10,15 @@
         margin-left: 0;
     }
 }
+.user{
+    padding: 7px 21px;
+    padding-top: 0px;
+    border-bottom: 1px solid rgba(22, 24, 35, 0.1);
+    span{
+        font-size: 1.7rem;
+        font-weight: 600;
+    }
+}
 .menu-popper{
     background-color: #fff;   
 }

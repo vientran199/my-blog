@@ -132,6 +132,14 @@ const AuthContextProvider = ({ children }) => {
         });
     };
 
+    const changePassword = async (formData) => {
+        try {
+            const response = await authServices.changePassword(formData);
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const authContextData = {
         authState,
         loginUser,
@@ -139,6 +147,7 @@ const AuthContextProvider = ({ children }) => {
         updateInfo,
         logoutUser,
         updateAvatar,
+        changePassword,
     };
     return (
         <AuthContext.Provider value={authContextData}>

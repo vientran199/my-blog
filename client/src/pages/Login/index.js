@@ -29,22 +29,22 @@ function Login() {
 
     useEffect(() => {
         if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-            nav('/')
+            nav('/');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
     const handleLogin = async () => {
         if (!validateForm(loginForm)) {
-            return
+            return;
         }
         if (loginForm.password === '') {
-            setErrorLoginForm(prev => {
+            setErrorLoginForm((prev) => {
                 return {
                     ...prev,
-                    password: 'Password is empty'
-                }
-            })
-            return false
+                    password: 'Password is empty',
+                };
+            });
+            return false;
         }
         const data = await loginUser(loginForm);
         if (data.success) {
@@ -62,49 +62,48 @@ function Login() {
             const temp = {
                 ...prev,
                 [name]: value,
-            }
-            validateForm(temp)
+            };
+            validateForm(temp);
             return temp;
         });
     };
 
     const validateForm = (data) => {
-        let isTrueEmail = true
+        let isTrueEmail = true;
         if (!isEmail(data.email) || data.email === '') {
-            setErrorLoginForm(prev => {
+            setErrorLoginForm((prev) => {
                 return {
                     ...prev,
-                    email: 'Email is invalid'
-                }
-            })
-            isTrueEmail = false
-            return false
-        }
-        else if (data.password === '') {
-            setErrorLoginForm(prev => {
+                    email: 'Email is invalid',
+                };
+            });
+            isTrueEmail = false;
+            return false;
+        } else if (data.password === '') {
+            setErrorLoginForm((prev) => {
                 return {
                     ...prev,
-                    password: 'Password is empty'
-                }
-            })
-            isTrueEmail = true
+                    password: 'Password is empty',
+                };
+            });
+            isTrueEmail = true;
             if (isTrueEmail) {
-                setErrorLoginForm(prev => {
+                setErrorLoginForm((prev) => {
                     return {
                         ...prev,
-                        email: ''
-                    }
-                })
+                        email: '',
+                    };
+                });
             }
-            return false
+            return false;
         }
-        isTrueEmail = true
+        isTrueEmail = true;
         setErrorLoginForm({
             email: '',
-            password: ''
-        })
-        return true
-    }
+            password: '',
+        });
+        return true;
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -143,11 +142,11 @@ function Login() {
                     <label>Remember me</label>
                 </div>
                 <Button
-                    to={config.routes.resetPasword}
+                    to={config.routes.changePasword}
                     className={cx('forgot-password')}
                     text
                 >
-                    Forgot password?
+                    Change password?
                 </Button>
             </div>
             <Button

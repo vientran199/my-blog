@@ -4,12 +4,12 @@ const routes = {
     contact: '/contact',
     login: '/login',
     register: '/register',
-    resetPasword: '/reset-password',
+    changePasword: '/change-password',
     write: '/write',
     editPost: '/write/:id',
     profile: '/me',
     saved: '/me/saved',
     detailPost: '/post/:id',
-    search: '/search'
+    search: '/search',
 };
 export default routes;

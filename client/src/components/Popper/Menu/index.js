@@ -8,18 +8,17 @@ import { useState } from 'react';
 import Header from './Header';
 
 const cx = classNames.bind(styles);
-const defaultFn = () => { };
+const defaultFn = () => {};
 
 function Menu({
     children,
+    user,
     items = [],
     hideOnClick = false,
     onChange = defaultFn,
 }) {
-    const [history, setHistory] = useState([
-        { data: items, }
-    ]);
-    const current = history[history.length - 1]
+    const [history, setHistory] = useState([{ data: items }]);
+    const current = history[history.length - 1];
     const renderItem = () => {
         return current.data.map((item, index) => {
             const isParent = !!item.children;
@@ -53,6 +52,10 @@ function Menu({
             render={(attrs) => (
                 <div className={cx('menu-list')} {...attrs}>
                     <Wrapper className={cx('menu-popper')}>
+                        <div className={cx('user')}>
+                            Signed in as <br />
+                            <span>{user}</span>
+                        </div>
                         {history.length > 1 && (
                             <Header title={current.title} onBack={handleBack} />
                         )}
@@ -61,7 +64,7 @@ function Menu({
                     </Wrapper>
                 </div>
             )}
-            onHide={() => setHistory(prev => prev.slice(0, 1))}
+            onHide={() => setHistory((prev) => prev.slice(0, 1))}
         >
             {children}
         </Tippy>
@@ -71,7 +74,8 @@ function Menu({
 Menu.propTypes = {
     children: PropTypes.node.isRequired,
     items: PropTypes.array,
+    user: PropTypes.string,
     hideOnClick: PropTypes.bool,
     onChange: PropTypes.func,
-}
+};
 export default Menu;

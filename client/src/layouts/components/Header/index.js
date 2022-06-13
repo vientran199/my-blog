@@ -22,7 +22,6 @@ import { useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 import Menu from '~/components/Popper/Menu';
 
-
 const cx = classNames.bind(styles);
 
 const MENU = [
@@ -62,13 +61,13 @@ const MENU_OPTION = [
                     code: 'vi',
                     title: 'Tiếng Việt',
                 },
-            ]
-        }
+            ],
+        },
     },
     {
         icon: <FontAwesomeIcon icon={faGear} />,
         title: 'Setting',
-        to: "#",
+        to: '#',
     },
     {
         icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
@@ -85,8 +84,7 @@ function Header() {
     const nav = useNavigate();
     const handleLogout = () => {
         logoutUser();
-        nav('/', { replace: true });
-        window.location.reload()
+        nav('/');
     };
 
     const handleMenuChange = (menuItem) => {
@@ -96,7 +94,7 @@ function Header() {
                 // Handle change language
                 break;
             case 'logout':
-                handleLogout()
+                handleLogout();
                 break;
             default:
         }
@@ -138,19 +136,28 @@ function Header() {
                                 to={config.routes.write}
                                 outline
                                 className={cx('add-btn')}
-                                leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
+                                leftIcon={
+                                    <FontAwesomeIcon icon={faPenToSquare} />
+                                }
                             >
                                 Viết bài
                             </Button>
 
                             <Menu
                                 items={MENU_OPTION}
+                                user={authState.user.fullName}
                                 hideOnClick={true}
                                 onChange={handleMenuChange}
                             >
                                 <img
                                     className={cx('avatar')}
-                                    src={images.noImage}
+                                    src={
+                                        authState.user.profile.image
+                                            ? `http://localhost:5000/${authState.user.profile.image
+                                                  .slice(11)
+                                                  .replace('\\', '/')}`
+                                            : images.noImage
+                                    }
                                     alt={'avatar'}
                                 />
                             </Menu>
