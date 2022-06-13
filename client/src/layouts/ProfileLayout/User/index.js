@@ -31,7 +31,9 @@ function User() {
     const user = authState.user;
     const [isEdit, setIsEdit] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
-    const [avatar, setAvatar] = useState(getUrl(user.profile.image) || '');
+    const [avatar, setAvatar] = useState(
+        user.profile.image ? getUrl(user.profile.image) : '',
+    );
     const [profile, setProfile] = useState({
         address: user.profile.address || '',
         lives: user.profile.lives || '',
