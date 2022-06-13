@@ -24,4 +24,8 @@ const upload = multer({
     { name: 'paragraph9.image', maxCount: 1 },
 ]);
 
-module.exports = upload;
+const avatar = multer({
+    storage: Storage,
+}).single('avatar');
+
+module.exports = { upload, avatar };

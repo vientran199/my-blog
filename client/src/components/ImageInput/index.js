@@ -1,24 +1,34 @@
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
-import { memo, useCallback } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styles from './ImageInput.module.scss';
 
 const cx = classNames.bind(styles);
 
 function ImageInput({ title, value, error, onChange, className, ...rest }) {
+    const [urlImage, setUrlImage] = useState(value);
     const classes = cx('file-upload', {
         [className]: className,
         error,
     });
-
-    const getURL = useCallback(() => {
-        if (typeof value === 'object') {
-            return URL.createObjectURL(value);
-        } else {
-            return `http://localhost:5000/${value.slice(11).replace('\\', '/')}`
+    useEffect(() => {
+        if (value) {
+            if (typeof value === 'object') {
+                value.preview = URL.createObjectURL(value);
+                setUrlImage(value.preview);
+            } else {
+                setUrlImage(
+                    `http://localhost:5000/${value
+                        .slice(11)
+                        .replace('\\', '/')}`,
+                );
+            }
         }
+
+        return () => value && URL.revokeObjectURL(value.preview);
     }, [value]);
+
     return (
         <div className={classes}>
             <Tippy
@@ -38,7 +48,7 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
                     />
 
                     <div className={cx('drag')}>
-                        {!value && (
+                        {(!urlImage || !value) && (
                             <div className={cx('icon-add')}>
                                 <span>{title}</span>
                             </div>
@@ -47,10 +57,10 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
                 </div>
             </Tippy>
 
-            {value && (
+            {urlImage && value && (
                 <img
                     className={cx('file-upload-image')}
-                    src={getURL()}
+                    src={urlImage}
                     alt="your anh"
                 />
             )}
@@ -64,6 +74,5 @@ ImageInput.propTypes = {
     error: PropTypes.string,
     onChange: PropTypes.func,
     className: PropTypes.string,
-
-}
+};
 export default memo(ImageInput);

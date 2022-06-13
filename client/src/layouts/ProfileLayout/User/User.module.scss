@@ -114,3 +114,51 @@
         border-color: #e46565;
     }
 }
+
+.wrapper-modal{
+    display: inline-block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 20;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.content-modal{
+    position: relative;
+    margin: 40px auto;
+    text-align: center;
+    max-width: 70%;
+    background-color: white;
+    .title-modal{
+        text-align: center;
+        font-size: 2.2rem;
+        padding: 5px 15px 15px;
+        border-bottom: 1px solid rgba(0,0,0,0.3);
+    }
+    .image-upload{
+        min-width: 50%;
+        min-height: 300px;
+        margin: 20px auto;
+    }
+    .icon-close{
+        position: absolute;
+        top: 17px;
+        right: 25px;
+        font-size: 2.4rem;
+        cursor: pointer;
+    }
+    .actions{
+        margin-bottom: 20px;
+    }
+    .cancel{
+        background-color: red;
+        border-color: red;
+    }
+    .cancel:hover{
+        background-color: rgb(255, 59, 59);
+        border-color: rgb(255, 59, 59);
+    }
+}

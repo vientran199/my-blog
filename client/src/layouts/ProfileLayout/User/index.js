@@ -18,13 +18,20 @@ import { AuthContext } from '~/contexts/AuthContext';
 import styles from './User.module.scss';
 import { formatDate } from '~/helper';
 import TextInput from '~/components/TextInput';
+import UploadAvatarModal from './UploadAvatarModal';
 
 const cx = classNames.bind(styles);
+const getUrl = (path) => {
+    const url = `http://localhost:5000/${path.slice(11).replace('\\', '/')}`;
+    return url;
+};
 
-function User({ data }) {
-    const { authState, updateInfo } = useContext(AuthContext);
+function User() {
+    const { authState, updateInfo, updateAvatar } = useContext(AuthContext);
     const user = authState.user;
     const [isEdit, setIsEdit] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [avatar, setAvatar] = useState(getUrl(user.profile.image) || '');
     const [profile, setProfile] = useState({
         address: user.profile.address || '',
         lives: user.profile.lives || '',
@@ -48,16 +55,26 @@ function User({ data }) {
             [e.target.name]: e.target.value,
         }));
     };
-
+    const handleUpdateAvatar = async (imageSelect) => {
+        try {
+            const formData = new FormData();
+            formData.append('avatar', imageSelect);
+            const response = await updateAvatar(formData);
+            if (response.success) {
+                setAvatar(getUrl(response.newAvatar));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const handleSubmit = async () => {
         try {
             const data = await updateInfo(profile);
             if (data) {
                 setIsEdit(false);
             }
-
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     };
     const render = () => {
@@ -123,22 +140,26 @@ function User({ data }) {
                             />
                         ) : (
                             <div className={cx('text-control')}>
-                                <Button href={`https://www.facebook.com/${profile.facebook}`} className={cx('link')} target='_blank' rel="noreferrer">
+                                <Button
+                                    href={`https://www.facebook.com/${profile.facebook}`}
+                                    className={cx('link')}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     {profile.facebook}
                                 </Button>
                             </div>
                         )}
                     </div>
-                )
-                }
-                {
-                    (profile.instagram || isEdit) && (
-                        <div className={cx('row')}>
-                            <FontAwesomeIcon
-                                className={cx('icon')}
-                                icon={faInstagram}
-                            />
-                            {isEdit ? <TextInput
+                )}
+                {(profile.instagram || isEdit) && (
+                    <div className={cx('row')}>
+                        <FontAwesomeIcon
+                            className={cx('icon')}
+                            icon={faInstagram}
+                        />
+                        {isEdit ? (
+                            <TextInput
                                 className={cx(
                                     'text-control',
                                     !isEdit ? 'none-line' : '',
@@ -148,66 +169,79 @@ function User({ data }) {
                                 value={profile.instagram}
                                 onChange={(e) => handleChange(e)}
                                 readOnly={!isEdit}
-                            /> :
-                                <div className={cx('text-control')}>
-                                    <Button href={`https://www.instagram.com/${profile.instagram}`} className={cx('link')} target='_blank' rel="noreferrer">
-                                        {profile.instagram}
-                                    </Button>
-                                </div>
-                            }
-                        </div>
-                    )
-                }
+                            />
+                        ) : (
+                            <div className={cx('text-control')}>
+                                <Button
+                                    href={`https://www.instagram.com/${profile.instagram}`}
+                                    className={cx('link')}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {profile.instagram}
+                                </Button>
+                            </div>
+                        )}
+                    </div>
+                )}
                 <div className={cx('row')}>
                     <FontAwesomeIcon className={cx('icon')} icon={faClock} />
                     <span>Join at {formatDate(user.created_at).mdy}</span>
                 </div>
-            </div >
+            </div>
         );
     };
     return (
-        <aside className={cx('wrapper')}>
-            <div className={cx('avatar')}>
-                <img
-                    src={profile.image ? profile.image : images.noImage}
-                    alt="no-i"
+        <>
+            <aside className={cx('wrapper')}>
+                <div className={cx('avatar')}>
+                    <img src={avatar ? avatar : images.noImage} alt="no-i" />
+                    <Button
+                        className={cx('change-btn')}
+                        onClick={() => setIsOpen(true)}
+                    >
+                        <FontAwesomeIcon icon={faCamera} />
+                    </Button>
+                </div>
+                <h4 className={cx('name')}>{user.fullName}</h4>
+                {render()}
+                {isEdit ? (
+                    <>
+                        <Button
+                            className={cx('btn-submit')}
+                            primary
+                            leftIcon={<FontAwesomeIcon icon={faCheck} />}
+                            onClick={() => handleSubmit()}
+                        >
+                            Submit
+                        </Button>
+                        <Button
+                            className={cx('btn-cancel')}
+                            primary
+                            leftIcon={<FontAwesomeIcon icon={faXmark} />}
+                            onClick={() => handleCancel()}
+                        >
+                            Cancel
+                        </Button>
+                    </>
+                ) : (
+                    <Button
+                        className={cx('btn-edit')}
+                        primary
+                        leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
+                        onClick={() => setIsEdit(true)}
+                    >
+                        Edit profile
+                    </Button>
+                )}
+            </aside>
+            {isOpen && (
+                <UploadAvatarModal
+                    onClose={() => setIsOpen(false)}
+                    onSubmit={handleUpdateAvatar}
                 />
-                <Button className={cx('change-btn')}>
-                    <FontAwesomeIcon icon={faCamera} />
-                </Button>
-            </div>
-            <h4 className={cx('name')}>{user.fullName}</h4>
-            {render()}
-            {isEdit ? (
-                <>
-                    <Button
-                        className={cx('btn-submit')}
-                        primary
-                        leftIcon={<FontAwesomeIcon icon={faCheck} />}
-                        onClick={() => handleSubmit()}
-                    >
-                        Submit
-                    </Button>
-                    <Button
-                        className={cx('btn-cancel')}
-                        primary
-                        leftIcon={<FontAwesomeIcon icon={faXmark} />}
-                        onClick={() => handleCancel()}
-                    >
-                        Cancel
-                    </Button>
-                </>
-            ) : (
-                <Button
-                    className={cx('btn-edit')}
-                    primary
-                    leftIcon={<FontAwesomeIcon icon={faPenToSquare} />}
-                    onClick={() => setIsEdit(true)}
-                >
-                    Edit profile
-                </Button>
             )}
-        </aside>
+        </>
     );
 }
 

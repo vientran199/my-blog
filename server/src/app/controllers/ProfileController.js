@@ -70,6 +70,46 @@ class ProfileController {
             });
         }
     }
+
+    //[PATCH] /api/profile/updateAvatar
+    async updateAvatar(req, res) {
+        const avatar = req.file;
+
+        try {
+            const auth = await Auth.findById(req.authId);
+            if (!auth) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Not found user',
+                });
+            }
+            const profile = await Profile.findByIdAndUpdate(
+                auth.profile.toString(),
+                {
+                    image: avatar.path,
+                },
+                {
+                    new: true,
+                },
+            );
+            if (!profile) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Not found profile',
+                });
+            }
+            res.json({
+                success: true,
+                newAvatar: profile.image,
+            });
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                sucess: false,
+                message: 'Internal server error',
+            });
+        }
+    }
 }
 
 module.exports = new ProfileController();

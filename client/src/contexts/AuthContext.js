@@ -3,14 +3,14 @@ import { createContext, useEffect, useReducer } from 'react';
 import { authReducer } from '~/reducers/AuthReducer';
 import * as authServices from '~/services/authServices';
 import { LOCAL_STORAGE_TOKEN_NAME } from './Constans';
-import * as profileServices from '~/services/profileServices'
+import * as profileServices from '~/services/profileServices';
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
     const [authState, dispatch] = useReducer(authReducer, {
         user: null,
         isAuthenticated: false,
-        isLoading: true
+        isLoading: true,
     });
 
     const loadUser = async () => {
@@ -87,18 +87,43 @@ const AuthContextProvider = ({ children }) => {
                 dispatch({
                     type: 'SET_AUTH',
                     payload: {
-                        isAuthenticated: true, user: {
+                        isAuthenticated: true,
+                        user: {
                             ...authState.user,
-                            profile: response.newProfile
-                        }
+                            profile: response.newProfile,
+                        },
                     },
                 });
-                return response.success
+                return response.success;
             }
         } catch (error) {
             console.log(error);
         }
-    }
+    };
+
+    const updateAvatar = async (avatarForm) => {
+        try {
+            const response = await profileServices.updateAvatar(avatarForm);
+            if (response.success) {
+                dispatch({
+                    type: 'SET_AUTH',
+                    payload: {
+                        isAuthenticated: true,
+                        user: {
+                            ...authState.user,
+                            profile: {
+                                ...authState.user.profile,
+                                image: response.newAvatar,
+                            },
+                        },
+                    },
+                });
+                return response;
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
     const logoutUser = async () => {
         localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
         dispatch({
@@ -107,7 +132,14 @@ const AuthContextProvider = ({ children }) => {
         });
     };
 
-    const authContextData = { authState, loginUser, registerUser, updateInfo, logoutUser };
+    const authContextData = {
+        authState,
+        loginUser,
+        registerUser,
+        updateInfo,
+        logoutUser,
+        updateAvatar,
+    };
     return (
         <AuthContext.Provider value={authContextData}>
             {children}

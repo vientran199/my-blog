@@ -1,12 +1,11 @@
 import classNames from 'classnames/bind';
-import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import { useState, memo, useRef } from 'react';
 
 import styles from './Search.module.scss';
 import { SearchIcon } from '~/components/Icon';
-import { useState, memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -20,7 +19,6 @@ function Search() {
     const handleChange = (e) => {
         setSearchText(e.target.value);
     };
-
 
     return (
         <div className={cx('wrapper')}>
@@ -61,7 +59,7 @@ function Search() {
             ) : (
                 <Link
                     className={cx('action-btn')}
-                    to={`/search?q=${searchText}`}
+                    to={searchText ? `/search?q=${searchText}` : ''}
                     onClick={() => {
                         setIsOpen(false);
                         setSearchText('');

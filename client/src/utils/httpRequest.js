@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans'
+import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans';
 
 const defaultOptions = {
     baseURL: process.env.REACT_APP_BASE_URL,
@@ -28,6 +28,10 @@ export const post = async (path, option) => {
 
 export const put = async (path, option) => {
     const response = await httpRequest.put(path, option);
+    return response.data;
+};
+export const patch = async (path, option) => {
+    const response = await httpRequest.patch(path, option);
     return response.data;
 };
 export const deletee = async (path, option) => {

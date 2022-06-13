@@ -6,14 +6,18 @@ import images from '~/assets/images';
 import NewsCard from '~/components/NewsCard';
 import NewsCardSkeleton from '~/components/NewsCard/NewsCardSkeleton';
 import Button from '~/components/Button';
+import ConfirmModal from '~/components/ConfirmModal';
 import * as siteServices from '~/services/siteServices';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Home() {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
+    const nav = useNavigate();
     useEffect(() => {
         const fetchApi = async () => {
             setIsLoading(true);
@@ -24,6 +28,9 @@ function Home() {
         fetchApi();
     }, []);
 
+    const handleConfirm = () => {
+        nav('/login');
+    };
     const render = () => {
         if (isLoading) {
             return [...Array(8)].map((_, index) => (
@@ -43,27 +50,45 @@ function Home() {
             );
         } else
             return posts.map((post) => (
-                <NewsCard key={post._id} data={post}></NewsCard>
+                <NewsCard
+                    key={post._id}
+                    data={post}
+                    onOpen={() => setIsOpen(true)}
+                    onClose={() => setIsOpen(false)}
+                ></NewsCard>
             ));
     };
     return (
-        <div className={cx('content')}>
-            <div className={cx('banner')}>
-                <img
-                    className={cx('image-cover')}
-                    src={images.imageCover}
-                    alt="cover"
-                />
-                <div className={cx('heading')}>
-                    <h2 className={cx('heading-main')}>Wellcome to MyBlog</h2>
-                    <p className={cx('description')}>
-                        Share and save your memories.
-                    </p>
+        <>
+            <div className={cx('content')}>
+                <div className={cx('banner')}>
+                    <img
+                        className={cx('image-cover')}
+                        src={images.imageCover}
+                        alt="cover"
+                    />
+                    <div className={cx('heading')}>
+                        <h2 className={cx('heading-main')}>
+                            Wellcome to MyBlog
+                        </h2>
+                        <p className={cx('description')}>
+                            Share and save your memories.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div className={cx('list-news')}>{render()}</div>
-        </div>
+                <div className={cx('list-news')}>{render()}</div>
+            </div>
+            <ConfirmModal
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onConfirm={handleConfirm}
+                title="Go to login?"
+                description="You are not logged in. Do you want to login?"
+                cancelText="No"
+                confirmText="Yes"
+            />
+        </>
     );
 }
 

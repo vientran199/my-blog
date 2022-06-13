@@ -15,15 +15,14 @@ import styles from './NewsCard.module.scss';
 import * as postServices from '~/services/postServices';
 import { useContext, useState } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function NewsCard({ data, className }) {
+function NewsCard({ data, className, onOpen }) {
     const { authState } = useContext(AuthContext);
-    const nav = useNavigate();
 
     const authId = authState.isAuthenticated ? authState.user._id : '';
+
     const [checked, setChecked] = useState({
         love: data.react.love.includes(authId),
         marked: data.react.marked.includes(authId),
@@ -45,12 +44,7 @@ function NewsCard({ data, className }) {
 
     const handleClick = async (type, id) => {
         if (!authId) {
-            const isRedirect = window.confirm(
-                'You are not logged in. Do you want to login?',
-            );
-            if (isRedirect) {
-                nav('/login');
-            }
+            onOpen();
             return;
         }
         if (data.auth === authId && type === 'marked') {
@@ -126,6 +120,7 @@ function NewsCard({ data, className }) {
 
 NewsCard.propTypes = {
     data: PropTypes.object.isRequired,
-    className: PropTypes.string
-}
+    className: PropTypes.string,
+    onOpen: PropTypes.func,
+};
 export default NewsCard;
