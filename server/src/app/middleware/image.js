@@ -4,7 +4,8 @@ const Storage = multer.diskStorage({
     destination: 'src/public/uploads',
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-        cb(null, file.fieldname + '-' + uniqueSuffix);
+        const typeFile = file.mimetype.split('/')[1];
+        cb(null, file.fieldname + '-' + uniqueSuffix + '.' + typeFile);
     },
 });
 
