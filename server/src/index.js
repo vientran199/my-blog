@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const { engine } = require('express-handlebars');
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const db = require('./config/db');
 
 const route = require('./routes');
