@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import styles from './DetailPost.module.scss';
 import Image from '~/components/Image';
 import * as postServices from '~/services/postServices';
-import { formatDate } from '~/helper';
+import { formatDate, getUrlImage } from '~/helper';
 
 import ButtonBack from '~/components/ButtonBack';
 
@@ -29,11 +29,6 @@ function DetailPost() {
         fetchApi();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [postId]);
-
-    const getUrlImage = (url) => {
-        const im = url.slice(11).replace('\\', '/');
-        return `http://localhost:5000/${im}`;
-    };
 
     const render = () => {
         if (!post) {

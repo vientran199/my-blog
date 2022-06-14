@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
-import { formatDate } from '~/helper';
+import { formatDate, getUrlImage } from '~/helper';
 import styles from './NewsCard.module.scss';
 import * as postServices from '~/services/postServices';
 import { useContext, useState } from 'react';
@@ -33,9 +33,7 @@ function NewsCard({ data, className, onOpen }) {
     });
 
     const getUrl = () => {
-        const im = data.imageCover.slice(11).replace('\\', '/');
-        const url = `http://localhost:5000/${im}`;
-        return url;
+        return getUrlImage(data.imageCover);
     };
 
     const classes = cx('card', {

@@ -16,14 +16,13 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import { AuthContext } from '~/contexts/AuthContext';
 import styles from './User.module.scss';
-import { formatDate } from '~/helper';
+import { formatDate, getUrlImage } from '~/helper';
 import TextInput from '~/components/TextInput';
 import UploadAvatarModal from './UploadAvatarModal';
 
 const cx = classNames.bind(styles);
 const getUrl = (path) => {
-    const url = `http://localhost:5000/${path.slice(11).replace('\\', '/')}`;
-    return url;
+    return getUrlImage(path);
 };
 
 function User() {
