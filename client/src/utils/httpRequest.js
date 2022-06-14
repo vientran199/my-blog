@@ -2,7 +2,7 @@ import axios from 'axios';
 import { LOCAL_STORAGE_TOKEN_NAME } from '~/contexts/Constans';
 
 const defaultOptions = {
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: 'http://localhost:5000/api',
     headers: {
         'Content-Type': 'application/json',
     },
