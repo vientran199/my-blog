@@ -8,6 +8,9 @@ function route(app) {
     app.use('/api/post', postRouter);
     app.use('/api/profile', profileRouter);
     app.use('/api', siteRouter);
+    app.get('/', (req, res) => {
+        res.render('Hello server');
+    });
 }
 
 module.exports = route;
