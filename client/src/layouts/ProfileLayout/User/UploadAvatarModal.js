@@ -12,13 +12,16 @@ const cx = classNames.bind(styles);
 
 function UploadAvatarModal({ onClose, className, onSubmit }) {
     const [imageSelect, setImageSelect] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const classes = cx('wrapper-modal', {
         [className]: className,
     });
 
     const handleSubmit = async () => {
-        onSubmit(imageSelect);
+        setIsLoading(true);
+        await onSubmit(imageSelect);
+        setIsLoading(false);
         onClose();
     };
     return (
@@ -47,6 +50,7 @@ function UploadAvatarModal({ onClose, className, onSubmit }) {
                         className={cx('upload')}
                         primary
                         onClick={handleSubmit}
+                        isLoading={isLoading}
                     >
                         Upload
                     </Button>

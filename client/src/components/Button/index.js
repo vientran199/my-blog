@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import styles from './Button.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +22,7 @@ function Button({
     className,
     leftIcon,
     rightIcon,
+    isLoading = false,
     onClick,
     ...passProps
 }) {
@@ -37,7 +40,6 @@ function Button({
             }
         });
     }
-
     if (to) {
         props.to = to;
         Comp = Link;
@@ -62,6 +64,9 @@ function Button({
         <Comp className={classes} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
             <span className={cx('title')}>{children}</span>
+            {isLoading && (
+                <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
+            )}
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
     );
@@ -81,7 +86,8 @@ Button.propTypes = {
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     leftIcon: PropTypes.node,
+    isLoading: PropTypes.bool,
     rightIcon: PropTypes.node,
     onClick: PropTypes.func,
-}
+};
 export default Button;

@@ -31,6 +31,7 @@ function User() {
     const user = authState.user;
     const [isEdit, setIsEdit] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [avatar, setAvatar] = useState(
         user.profile.image ? getUrl(user.profile.image) : '',
     );
@@ -71,7 +72,9 @@ function User() {
     };
     const handleSubmit = async () => {
         try {
+            setIsLoading(true);
             const data = await updateInfo(profile);
+            setIsLoading(false);
             if (data) {
                 setIsEdit(false);
             }
@@ -143,12 +146,12 @@ function User() {
                         ) : (
                             <div className={cx('text-control')}>
                                 <Button
-                                    href={`https://www.facebook.com/${profile.facebook}`}
+                                    href={`${profile.facebook}`}
                                     className={cx('link')}
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {profile.facebook}
+                                    {profile.facebook.split('/')[3]}
                                 </Button>
                             </div>
                         )}
@@ -175,12 +178,12 @@ function User() {
                         ) : (
                             <div className={cx('text-control')}>
                                 <Button
-                                    href={`https://www.instagram.com/${profile.instagram}`}
+                                    href={`${profile.instagram}`}
                                     className={cx('link')}
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {profile.instagram}
+                                    {profile.instagram.split('/')[3]}
                                 </Button>
                             </div>
                         )}
@@ -214,6 +217,7 @@ function User() {
                             primary
                             leftIcon={<FontAwesomeIcon icon={faCheck} />}
                             onClick={() => handleSubmit()}
+                            isLoading={isLoading}
                         >
                             Submit
                         </Button>

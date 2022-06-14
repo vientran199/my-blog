@@ -4,7 +4,9 @@
 }
 
 .heading{
+    position: relative;
     font-family: var(--font-family);
+    width: var(--width-layout);
     font-size: 1.6rem;
     letter-spacing: 1px;
     word-spacing: 4px;
@@ -12,6 +14,17 @@
     color: var(--primary);
     text-align: center;
     padding: 2rem;
+    margin: 0 auto;
+}
+.btn-back{
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+//     font-size: 2.2rem;
+//     border-radius: 999px;
+//     min-width: 40px;
+//    width: 40px;
 }
 .heading-title{
     font-size: 3.2rem;

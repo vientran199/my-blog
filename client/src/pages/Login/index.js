@@ -26,7 +26,7 @@ function Login() {
         email: '',
         password: '',
     });
-
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
             nav('/');
@@ -46,7 +46,9 @@ function Login() {
             });
             return false;
         }
+        setIsLoading(true);
         const data = await loginUser(loginForm);
+        setIsLoading(false);
         if (data.success) {
             nav('/');
         } else {
@@ -155,6 +157,7 @@ function Login() {
                 outline
                 small
                 onClick={handleLogin}
+                isLoading={isLoading}
             >
                 Login
             </Button>

@@ -120,8 +120,10 @@ function Profile() {
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
                 onConfirm={() => handleDelete(postSelected)}
-                title="Xác nhận xóa bài viết"
-                description="Bạn có chắc chắn muốn xóa bài viết?"
+                title="Conform delete post"
+                description="Are you sure delete this post?"
+                cancelText="No"
+                confirmText="Yes"
             ></ConfirmModal>
         </>
     );

@@ -140,7 +140,7 @@ function Header() {
                                     <FontAwesomeIcon icon={faPenToSquare} />
                                 }
                             >
-                                Viết bài
+                                Write post
                             </Button>
 
                             <Menu

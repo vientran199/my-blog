@@ -100,7 +100,19 @@
         text-decoration-color: var(--primary);
     }
 }
-
+.loading{
+    margin-left: 10px;
+    background-color: transparent;
+    animation: spinner 0.8s linear infinite;
+}
+@keyframes spinner {
+    from {
+        transform:  rotate(0);
+    }
+    to {
+        transform:  rotate(360deg);
+    }
+}
 // Button sizes
 .small {
     min-width: 130px;

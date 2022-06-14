@@ -30,30 +30,31 @@ function Register() {
         password: '',
         verifyPassword: '',
     });
-
+    const [isLoading, setIsLoading] = useState(false);
     const nav = useNavigate();
 
     useEffect(() => {
         if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
-            nav('/')
+            nav('/');
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     const handleRegister = async () => {
         if (!validateFrom()) {
-            return
+            return;
         }
+        setIsLoading(true);
         const response = await registerUser(registerForm);
+        setIsLoading(false);
         if (response.success) {
             nav('/');
-        }
-        else {
-            setErrorRegisterForm(prev => ({
+        } else {
+            setErrorRegisterForm((prev) => ({
                 ...prev,
-                [response.type]: response.message
-            }))
-            alert('Register fail')
+                [response.type]: response.message,
+            }));
+            alert('Register fail');
         }
     };
 
@@ -70,73 +71,79 @@ function Register() {
     };
 
     const validateFrom = () => {
-        let isSubmittable = true
-        const valuesKeys = Object.keys(registerForm)
-        valuesKeys.forEach(key => {
-            if (registerForm[key] === "") {
-                setErrorRegisterForm(prev => ({
+        let isSubmittable = true;
+        const valuesKeys = Object.keys(registerForm);
+        valuesKeys.forEach((key) => {
+            if (registerForm[key] === '') {
+                setErrorRegisterForm((prev) => ({
                     ...prev,
-                    [key]: 'Required'
-                }))
-                isSubmittable = false
+                    [key]: 'Required',
+                }));
+                isSubmittable = false;
             }
-        })
+        });
         if (!isEmail(registerForm.email) && registerForm.email) {
-            setErrorRegisterForm(prev => ({
+            setErrorRegisterForm((prev) => ({
                 ...prev,
-                email: 'Email is invalid'
-            }))
-            isSubmittable = false
+                email: 'Email is invalid',
+            }));
+            isSubmittable = false;
         } else if (isEmail(registerForm.email) && registerForm.email) {
-            setErrorRegisterForm(prev => ({
+            setErrorRegisterForm((prev) => ({
                 ...prev,
-                email: ''
-            }))
+                email: '',
+            }));
         }
         if (registerForm.userName) {
-            setErrorRegisterForm(prev => ({
+            setErrorRegisterForm((prev) => ({
                 ...prev,
-                userName: ''
-            }))
+                userName: '',
+            }));
         }
         if (registerForm.fullName) {
-            setErrorRegisterForm(prev => ({
+            setErrorRegisterForm((prev) => ({
                 ...prev,
-                fullName: ''
-            }))
+                fullName: '',
+            }));
         }
         if (registerForm.password || registerForm.verifyPassword) {
-            if (registerForm.password && registerForm.verifyPassword && registerForm.password !== registerForm.verifyPassword) {
-                setErrorRegisterForm(prev => ({
+            if (
+                registerForm.password &&
+                registerForm.verifyPassword &&
+                registerForm.password !== registerForm.verifyPassword
+            ) {
+                setErrorRegisterForm((prev) => ({
                     ...prev,
                     password: '',
-                    verifyPassword: 'Password not match'
-                }))
-                isSubmittable = false
-            }
-            else if (registerForm.password && registerForm.verifyPassword && registerForm.password === registerForm.verifyPassword) {
-                setErrorRegisterForm(prev => ({
+                    verifyPassword: 'Password not match',
+                }));
+                isSubmittable = false;
+            } else if (
+                registerForm.password &&
+                registerForm.verifyPassword &&
+                registerForm.password === registerForm.verifyPassword
+            ) {
+                setErrorRegisterForm((prev) => ({
                     ...prev,
                     password: '',
-                    verifyPassword: ''
-                }))
+                    verifyPassword: '',
+                }));
             } else if (registerForm.password) {
-                setErrorRegisterForm(prev => ({
+                setErrorRegisterForm((prev) => ({
                     ...prev,
                     password: '',
-                }))
-                isSubmittable = false
+                }));
+                isSubmittable = false;
             } else {
-                setErrorRegisterForm(prev => ({
+                setErrorRegisterForm((prev) => ({
                     ...prev,
                     verifyPassword: '',
-                }))
-                isSubmittable = false
+                }));
+                isSubmittable = false;
             }
-
         }
-        return isSubmittable
-    }
+        return isSubmittable;
+    };
     return (
         <div className={cx('wrapper')}>
             <h3 className={cx('heading')}>Create your account</h3>
@@ -184,7 +191,7 @@ function Register() {
                 value={registerForm.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                type='password'
+                type="password"
                 error={errorRegisterForm.password}
             />
             <TextInput
@@ -196,7 +203,7 @@ function Register() {
                 value={registerForm.verifyPassword}
                 onChange={handleChange}
                 placeholder="Verify your password"
-                type='password'
+                type="password"
                 error={errorRegisterForm.verifyPassword}
             />
 
@@ -206,6 +213,7 @@ function Register() {
                 outline
                 small
                 onClick={handleRegister}
+                isLoading={isLoading}
             >
                 Register
             </Button>

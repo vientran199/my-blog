@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Button from '~/components/Button';
@@ -17,6 +17,7 @@ import styles from './Write.module.scss';
 import * as postService from '~/services/postServices';
 import { AuthContext } from '~/contexts/AuthContext';
 import ConfirmModal from '~/components/ConfirmModal';
+import ButtonBack from '~/components/ButtonBack';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +25,8 @@ function Write() {
     const { authState } = useContext(AuthContext);
     const nav = useNavigate();
     const postId = useLocation().pathname.split('/')[2] || '';
-    const [isOpen, setIsOpen] = useState(false)
+
+    const [isOpen, setIsOpen] = useState(false);
     const [valueForm, setValueForm] = useState({
         title: '',
         imageCover: '',
@@ -43,7 +45,7 @@ function Write() {
             description: '',
         },
     ]);
-
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
         const fetchApi = async () => {
             const data = await postService.getPostById(postId);
@@ -135,6 +137,7 @@ function Write() {
         if (!validate()) {
             return;
         }
+        setIsLoading(true);
         const valuePost = { ...valueForm, paragraph: [...paragraph] };
 
         const formData = new FormData();
@@ -158,7 +161,7 @@ function Write() {
         } else if (type === 'edited') {
             response = await postService.updatePost(postId, formData);
         }
-
+        setIsLoading(false);
         if (response.success) {
             alert(response.message);
             nav(`/me`);
@@ -169,7 +172,7 @@ function Write() {
 
     const handleCancel = (e) => {
         e.preventDefault();
-        setIsOpen(true)
+        setIsOpen(true);
     };
     const validate = () => {
         let isSubmittable = true;
@@ -191,7 +194,7 @@ function Write() {
 
         return isSubmittable;
     };
-    const renderMoreImage = () => {
+    const renderMoreImage = useCallback(() => {
         return paragraph.map((item, index) => (
             <div key={index} className={cx('mb', 'more-para')}>
                 <FontAwesomeIcon
@@ -221,15 +224,23 @@ function Write() {
                 </div>
             </div>
         ));
-    };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paragraph]);
     return (
         <>
             <div className={cx('content')}>
                 <div className={cx('heading')}>
-                    <h3 className={cx('heading-title')}>Write blog</h3>
-                    <p className={cx('description')}>
-                        Write a blog to save memories you remember ^^
-                    </p>
+                    <ButtonBack className={cx('btn-back')} />
+                    <h3 className={cx('heading-title')}>
+                        {postId ? 'Edit post' : 'Write blog'}
+                    </h3>
+                    {postId ? (
+                        ''
+                    ) : (
+                        <p className={cx('description')}>
+                            Write a blog to save memories you remember ^^
+                        </p>
+                    )}
                 </div>
                 <form encType="multipart-form-data">
                     <div className={cx('form-blog')}>
@@ -317,6 +328,7 @@ function Write() {
                                     primary
                                     onClick={(e) => handleSubmit(e, 'edited')}
                                     type="submit"
+                                    isLoading={isLoading}
                                 >
                                     Save
                                 </Button>
@@ -336,6 +348,7 @@ function Write() {
                                     primary
                                     onClick={(e) => handleSubmit(e, 'created')}
                                     type="submit"
+                                    isLoading={isLoading}
                                 >
                                     Publish
                                 </Button>
@@ -355,11 +368,13 @@ function Write() {
             <ConfirmModal
                 isOpen={isOpen}
                 onClose={() => setIsOpen(false)}
-                onConfirm={() => { nav('/me') }}
+                onConfirm={() => {
+                    nav('/me');
+                }}
                 title="Confirm cancel"
                 description="Changes you made may not be saved. Are you sure cancel?"
-                cancelText='No'
-                confirmText='Yes'
+                cancelText="No"
+                confirmText="Yes"
             ></ConfirmModal>
         </>
     );
