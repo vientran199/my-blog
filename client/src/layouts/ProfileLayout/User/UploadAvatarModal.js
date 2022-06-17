@@ -7,6 +7,7 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import ImageInput from '~/components/ImageInput';
 import { useState } from 'react';
+import * as imageServices from '~/services/imageServices';
 
 const cx = classNames.bind(styles);
 
@@ -19,9 +20,20 @@ function UploadAvatarModal({ onClose, className, onSubmit }) {
     });
 
     const handleSubmit = async () => {
-        setIsLoading(true);
-        await onSubmit(imageSelect);
-        setIsLoading(false);
+        const res = await imageServices.uploadImage(
+            [imageSelect],
+            setIsLoading,
+        );
+        Promise.all(res)
+            .then((values) => {
+                return onSubmit({ avatar: values[0] });
+            })
+            .then(() => {
+                setIsLoading(false);
+            })
+            .catch(() => {
+                console.log('error');
+            });
         onClose();
     };
     return (

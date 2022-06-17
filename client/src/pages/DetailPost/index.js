@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import styles from './DetailPost.module.scss';
 import Image from '~/components/Image';
 import * as postServices from '~/services/postServices';
-import { formatDate, getUrlImage } from '~/helper';
+import { formatDate } from '~/helper';
 
 import ButtonBack from '~/components/ButtonBack';
 
@@ -39,7 +39,7 @@ function DetailPost() {
                     <ButtonBack className={cx('btn-back')} />
 
                     <div className={cx('image-cover')}>
-                        <Image src={getUrlImage(post.imageCover)} alt="cover" />
+                        <Image src={post.imageCover} alt="cover" />
                     </div>
                     <div className={cx('heading')}>
                         <h3 className={cx('title')}>{post.title}</h3>
@@ -57,10 +57,7 @@ function DetailPost() {
                             return (
                                 <div className={cx('para')} key={item._id}>
                                     {item.image && (
-                                        <Image
-                                            src={getUrlImage(item.image)}
-                                            alt="anh"
-                                        />
+                                        <Image src={item.image} alt="anh" />
                                     )}
                                     <div className={cx('description')}>
                                         {item.description}

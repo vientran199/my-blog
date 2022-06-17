@@ -82,12 +82,10 @@ function Login() {
             isTrueEmail = false;
             return false;
         } else if (data.password === '') {
-            setErrorLoginForm((prev) => {
-                return {
-                    ...prev,
-                    password: 'Password is empty',
-                };
-            });
+            setErrorLoginForm((prev) => ({
+                ...prev,
+                password: 'Password is empty',
+            }));
             isTrueEmail = true;
             if (isTrueEmail) {
                 setErrorLoginForm((prev) => {

@@ -107,7 +107,14 @@ function Register() {
             }));
         }
         if (registerForm.password || registerForm.verifyPassword) {
-            if (
+            if (registerForm.password && registerForm.password.length < 8) {
+                setErrorRegisterForm((prev) => ({
+                    ...prev,
+                    password: 'Password length at least 8 characters',
+                    verifyPassword: '',
+                }));
+                isSubmittable = false;
+            } else if (
                 registerForm.password &&
                 registerForm.verifyPassword &&
                 registerForm.password !== registerForm.verifyPassword

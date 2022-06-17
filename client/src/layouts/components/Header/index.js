@@ -21,7 +21,6 @@ import NavMenus from './NavMenus';
 import { useContext } from 'react';
 import { AuthContext } from '~/contexts/AuthContext';
 import Menu from '~/components/Popper/Menu';
-import { getUrlImage } from '~/helper';
 
 const cx = classNames.bind(styles);
 
@@ -154,9 +153,7 @@ function Header() {
                                     className={cx('avatar')}
                                     src={
                                         authState.user.profile.image
-                                            ? getUrlImage(
-                                                  authState.user.profile.image,
-                                              )
+                                            ? authState.user.profile.image
                                             : images.noImage
                                     }
                                     alt={'avatar'}

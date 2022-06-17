@@ -73,8 +73,7 @@ class ProfileController {
 
     //[PATCH] /api/profile/updateAvatar
     async updateAvatar(req, res) {
-        const avatar = req.file;
-
+        const { avatar } = req.body;
         try {
             const auth = await Auth.findById(req.authId);
             if (!auth) {
@@ -86,7 +85,7 @@ class ProfileController {
             const profile = await Profile.findByIdAndUpdate(
                 auth.profile.toString(),
                 {
-                    image: avatar.path,
+                    image: avatar,
                 },
                 {
                     new: true,

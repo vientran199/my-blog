@@ -16,14 +16,11 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import { AuthContext } from '~/contexts/AuthContext';
 import styles from './User.module.scss';
-import { formatDate, getUrlImage } from '~/helper';
+import { formatDate } from '~/helper';
 import TextInput from '~/components/TextInput';
 import UploadAvatarModal from './UploadAvatarModal';
 
 const cx = classNames.bind(styles);
-const getUrl = (path) => {
-    return getUrlImage(path);
-};
 
 function User() {
     const { authState, updateInfo, updateAvatar } = useContext(AuthContext);
@@ -31,9 +28,7 @@ function User() {
     const [isEdit, setIsEdit] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-    const [avatar, setAvatar] = useState(
-        user.profile.image ? getUrl(user.profile.image) : '',
-    );
+    const [avatar, setAvatar] = useState(user.profile.image || '');
     const [profile, setProfile] = useState({
         address: user.profile.address || '',
         lives: user.profile.lives || '',
@@ -58,12 +53,11 @@ function User() {
         }));
     };
     const handleUpdateAvatar = async (imageSelect) => {
+        console.log(imageSelect);
         try {
-            const formData = new FormData();
-            formData.append('avatar', imageSelect);
-            const response = await updateAvatar(formData);
+            const response = await updateAvatar(imageSelect);
             if (response.success) {
-                setAvatar(getUrl(response.newAvatar));
+                setAvatar(response.newAvatar);
             }
         } catch (error) {
             console.log(error);

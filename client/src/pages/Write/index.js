@@ -15,6 +15,7 @@ import ImageInput from '~/components/ImageInput';
 import TextInput from '~/components/TextInput';
 import styles from './Write.module.scss';
 import * as postService from '~/services/postServices';
+import * as imageServices from '~/services/imageServices';
 import { AuthContext } from '~/contexts/AuthContext';
 import ConfirmModal from '~/components/ConfirmModal';
 import ButtonBack from '~/components/ButtonBack';
@@ -131,43 +132,52 @@ function Write() {
             [e.target.name]: isFile ? f : e.target.value,
         });
     };
-
     const handleSubmit = async (e, type) => {
         e.preventDefault();
         if (!validate()) {
             return;
         }
         setIsLoading(true);
-        const valuePost = { ...valueForm, paragraph: [...paragraph] };
+        const images = [
+            valueForm.imageCover,
+            ...paragraph.map((item) => item.image),
+        ];
+        let urlsImage = await imageServices.uploadImage(images, setIsLoading);
 
-        const formData = new FormData();
-        formData.append('imageCover', valuePost.imageCover);
-        formData.append('title', valuePost.title);
-        formData.append('description', valuePost.description);
-        formData.append('status', valuePost.status);
-        for (let i = 0; i < valuePost.paragraph.length; i++) {
-            formData.append(
-                `paragraph${i}.image`,
-                valuePost.paragraph[i].image,
-            );
-            formData.append(
-                `paragraph${i}.description`,
-                valuePost.paragraph[i].description,
-            );
-        }
-        let response = '';
-        if (type === 'created') {
-            response = await postService.create(formData);
-        } else if (type === 'edited') {
-            response = await postService.updatePost(postId, formData);
-        }
-        setIsLoading(false);
-        if (response.success) {
-            alert(response.message);
-            nav(`/me`);
-        } else {
-            alert(response.message);
-        }
+        Promise.all(urlsImage)
+            .then((values) => {
+                const [imageCover, ...images] = values;
+                const formData = {
+                    ...valueForm,
+                    imageCover,
+                    paragraph: paragraph.map((para, index) => {
+                        if ((images[index], para.description)) {
+                            return {
+                                image: images[index] || '',
+                                description: para.description,
+                            };
+                        }
+                        return true;
+                    }),
+                };
+                if (type === 'created') {
+                    return postService.create(formData);
+                } else if (type === 'edited') {
+                    return postService.updatePost(postId, formData);
+                }
+            })
+            .then((response) => {
+                setIsLoading(false);
+                if (response.success) {
+                    alert(response.message);
+                    nav(`/me`);
+                } else {
+                    alert(response.message);
+                }
+            })
+            .catch((error) => {
+                console.log('error', error);
+            });
     };
 
     const handleCancel = (e) => {

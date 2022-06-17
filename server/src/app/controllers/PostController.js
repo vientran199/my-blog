@@ -5,42 +5,13 @@ class PostController {
     //[post] /create
     async create(req, res) {
         try {
-            const { title, description, status, ...descriptions } = req.body;
-            const { imageCover, ...images } = req.files;
+            const { title, description, status, imageCover, paragraph } =
+                req.body;
 
-            let paragraph = [];
-            for (let i = 0; i < 10; i++) {
-                if (
-                    images[`paragraph${i}.image`] ||
-                    descriptions[`paragraph${i}.description`]
-                ) {
-                    if (!images[`paragraph${i}.image`]) {
-                        const temp = {
-                            image: '',
-                            description:
-                                descriptions[`paragraph${i}.description`],
-                        };
-                        paragraph.push(temp);
-                    } else if (!descriptions[`paragraph${i}.description`]) {
-                        const temp = {
-                            image: images[`paragraph${i}.image`][0].path,
-                            description: '',
-                        };
-                        paragraph.push(temp);
-                    } else {
-                        const temp = {
-                            image: images[`paragraph${i}.image`][0].path,
-                            description:
-                                descriptions[`paragraph${i}.description`],
-                        };
-                        paragraph.push(temp);
-                    }
-                }
-            }
             const react = new React();
             const newPost = new Post({
                 title,
-                imageCover: imageCover[0].path,
+                imageCover: imageCover,
                 description,
                 paragraph: paragraph,
                 status,
@@ -144,14 +115,8 @@ class PostController {
     }
 
     async updatePost(req, res) {
-        const {
-            title,
-            imageCover: srcImageCOver,
-            description,
-            status,
-            ...descriptions
-        } = req.body;
-        const { imageCover, ...images } = req.files;
+        const { title, imageCover, description, status, paragraph } = req.body;
+
         const { id: postId } = req.params;
         const post = await Post.findById(postId);
 
@@ -162,38 +127,9 @@ class PostController {
             });
         }
         try {
-            let paragraph = [];
-            for (let i = 0; i < 10; i++) {
-                if (
-                    images[`paragraph${i}.image`] ||
-                    descriptions[`paragraph${i}.description`]
-                ) {
-                    if (!images[`paragraph${i}.image`]) {
-                        const temp = {
-                            image: '',
-                            description:
-                                descriptions[`paragraph${i}.description`],
-                        };
-                        paragraph.push(temp);
-                    } else if (!descriptions[`paragraph${i}.description`]) {
-                        const temp = {
-                            image: images[`paragraph${i}.image`][0].path,
-                            description: '',
-                        };
-                        paragraph.push(temp);
-                    } else {
-                        const temp = {
-                            image: images[`paragraph${i}.image`][0].path,
-                            description:
-                                descriptions[`paragraph${i}.description`],
-                        };
-                        paragraph.push(temp);
-                    }
-                }
-            }
             const newPost = {
                 title,
-                imageCover: srcImageCOver ? srcImageCOver : imageCover[0].path,
+                imageCover,
                 description,
                 paragraph: paragraph,
                 status,

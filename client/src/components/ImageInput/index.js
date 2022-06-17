@@ -3,7 +3,6 @@ import Tippy from '@tippyjs/react';
 import classNames from 'classnames/bind';
 import { memo, useEffect, useState } from 'react';
 import styles from './ImageInput.module.scss';
-import { getUrlImage } from '~/helper';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +18,7 @@ function ImageInput({ title, value, error, onChange, className, ...rest }) {
                 value.preview = URL.createObjectURL(value);
                 setUrlImage(value.preview);
             } else {
-                setUrlImage(getUrlImage(value));
+                setUrlImage(value);
             }
         }
 

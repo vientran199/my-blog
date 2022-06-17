@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
-import { formatDate, getUrlImage } from '~/helper';
+import { formatDate } from '~/helper';
 import styles from './NewsCard.module.scss';
 import * as postServices from '~/services/postServices';
 import { useContext, useState } from 'react';
@@ -31,10 +31,6 @@ function NewsCard({ data, className, onOpen }) {
         love: data.react.love.length,
         marked: data.react.marked.length,
     });
-
-    const getUrl = () => {
-        return getUrlImage(data.imageCover);
-    };
 
     const classes = cx('card', {
         [className]: className,
@@ -63,7 +59,7 @@ function NewsCard({ data, className, onOpen }) {
     return (
         <figure className={classes}>
             <div className={cx('image')}>
-                <Image src={getUrl()} alt="pr-sample11" />
+                <Image src={data.imageCover} alt="pr-sample11" />
             </div>
             <figcaption>
                 <div className={cx('date')}>
