@@ -149,16 +149,29 @@ function Write() {
                 const [imageCover, ...images] = values;
                 const formData = {
                     ...valueForm,
-                    imageCover,
-                    paragraph: paragraph.map((para, index) => {
-                        if ((images[index], para.description)) {
-                            return {
-                                image: images[index] || '',
-                                description: para.description,
-                            };
-                        }
-                        return true;
-                    }),
+                    imageCover: imageCover,
+                    paragraph: paragraph
+                        .map((para, index) => {
+                            let temp = {};
+                            if (para.image && para.description) {
+                                temp = {
+                                    image: images[index],
+                                    description: para.description,
+                                };
+                            } else if (para.image) {
+                                temp = {
+                                    image: images[index],
+                                    description: para.description,
+                                };
+                            } else if (para.description) {
+                                temp = {
+                                    image: '',
+                                    description: para.description,
+                                };
+                            }
+                            return temp;
+                        })
+                        .filter((item) => item.description || item.image),
                 };
                 if (type === 'created') {
                     return postService.create(formData);

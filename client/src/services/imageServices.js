@@ -3,7 +3,7 @@ import { storage } from '~/firebase';
 export const uploadImage = async (images, setIsLoading) => {
     const promises = [];
     await images.forEach(async (image, index) => {
-        if (image && image === Object) {
+        if (image && typeof image !== 'string') {
             const promise = new Promise(function (resolve, reject) {
                 const fileName =
                     index + '_' + new Date().getTime() + image.name;
@@ -30,6 +30,11 @@ export const uploadImage = async (images, setIsLoading) => {
                             });
                     },
                 );
+            });
+            promises.push(promise);
+        } else {
+            const promise = new Promise((resolve, reject) => {
+                return resolve(image);
             });
             promises.push(promise);
         }

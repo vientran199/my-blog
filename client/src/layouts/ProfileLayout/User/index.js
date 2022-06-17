@@ -53,7 +53,6 @@ function User() {
         }));
     };
     const handleUpdateAvatar = async (imageSelect) => {
-        console.log(imageSelect);
         try {
             const response = await updateAvatar(imageSelect);
             if (response.success) {

@@ -88,7 +88,6 @@ function Header() {
     };
 
     const handleMenuChange = (menuItem) => {
-        console.log(menuItem);
         switch (menuItem.type) {
             case 'language':
                 // Handle change language

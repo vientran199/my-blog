@@ -7,13 +7,12 @@ class PostController {
         try {
             const { title, description, status, imageCover, paragraph } =
                 req.body;
-
             const react = new React();
             const newPost = new Post({
                 title,
                 imageCover: imageCover,
                 description,
-                paragraph: paragraph,
+                paragraph: paragraph || [],
                 status,
                 auth: req.authId,
                 react: react._id,

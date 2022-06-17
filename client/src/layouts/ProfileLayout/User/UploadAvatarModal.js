@@ -24,17 +24,18 @@ function UploadAvatarModal({ onClose, className, onSubmit }) {
             [imageSelect],
             setIsLoading,
         );
+        setIsLoading(true);
         Promise.all(res)
             .then((values) => {
                 return onSubmit({ avatar: values[0] });
             })
             .then(() => {
                 setIsLoading(false);
+                onClose();
             })
             .catch(() => {
                 console.log('error');
             });
-        onClose();
     };
     return (
         <div className={classes}>
