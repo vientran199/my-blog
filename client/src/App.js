@@ -6,20 +6,22 @@ import Loading from './components/Loading';
 import NotFound from './pages/NotFound';
 function App() {
     const { authState } = useContext(AuthContext);
-    const userInfo = authState.user;
     const [allowedRoutes, setRoutes] = useState([]);
 
     useEffect(() => {
-        let tempRoute = publicRoutes
+        let tempRoute = [...publicRoutes];
         if (authState.isAuthenticated) {
-            tempRoute = [...tempRoute, ...privateRoutes, {
+            tempRoute = [...tempRoute, ...privateRoutes];
+        }
+        tempRoute = [
+            ...tempRoute,
+            {
                 path: '*',
                 component: NotFound,
-            },]
-        }
-        setRoutes(tempRoute)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userInfo]);
+            },
+        ];
+        setRoutes(tempRoute);
+    }, [authState.isAuthenticated]);
     return authState.isLoading ? (
         <Loading />
     ) : (

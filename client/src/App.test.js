@@ -1,8 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { AuthContext } from './contexts/AuthContext';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+const renderWithAuth = (authState) =>
+    render(
+        <AuthContext.Provider value={{ authState }}>
+            <App />
+        </AuthContext.Provider>,
+    );
+
+test('renders loading state while authentication status is being checked', () => {
+    renderWithAuth({
+        user: null,
+        isAuthenticated: false,
+        isLoading: true,
+    });
+
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
 });
